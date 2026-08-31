@@ -1,0 +1,6 @@
+[package]
+name = "decks"
+version = "0.1.0"
+
+[dependencies]
+mslide = { git = "https://github.com/284km/mslide", rev = "52c10db98ff39513a3c98672faa8d92b8bb37351" }

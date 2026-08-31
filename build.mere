@@ -1,0 +1,84 @@
+// build.mere — every deck in this repository, as a page and a PDF.
+//
+// The tool is [mslide](https://github.com/284km/mslide), pinned by revision in
+// `mere.toml`. That pin is the point: a talk given in 2026 renders in 2030
+// exactly as it was given, however much the tool has moved since. A deck is not
+// software and should not drift with its build.
+//
+// The outputs are committed next to their source. GitHub Pages serves this
+// branch directly, so a deck is published by pushing it — there is no build to
+// run in a workflow, and nothing to go wrong between writing and showing.
+
+import "github.com/284km/mslide/html.mere";
+import "github.com/284km/mslide/pdf.mere";
+import "github.com/284km/mslide/png.mere";
+import "github.com/284km/mslide/bundled.mere";
+
+// Which directory of talks, and where the index goes. Arguments rather than
+// constants so the gate can point it at a fixture: `decks/` holds talks that
+// have been given, and a gate that writes into it would publish its own input.
+let decks_dir = match args () with Cons (d, _) -> d | Nil -> "decks";
+let index_path = match args () with
+  | Cons (_d, Cons (i, _)) -> i
+  | _ -> (if decks_dir == "decks" then "index.html" else decks_dir ++ "/index.html");
+
+// A deck is a directory with a `deck.md` in it. Anything else in `decks/` is
+// left alone rather than guessed at.
+let deck_dirs = fn () ->
+  let all = list_dir decks_dir in
+  let named = list_filter all (fn (n: str) ->
+    file_exists (decks_dir ++ "/" ++ n ++ "/deck.md")) in
+  list_sort_by (fn (a: str) -> fn (b: str) -> a <= b) named;
+
+let build_one = fn (f: font) -> fn (name: str) ->
+  let dir = decks_dir ++ "/" ++ name in
+  let d = Deck.of_lines (read_lines (dir ++ "/deck.md")) in
+  let _ = write_file (dir ++ "/index.html") (DeckHtml.render d) in
+  let fr = Layout.frame_of 1280 720 in
+  let pngs = list_map d.slides (fn (s: slide) ->
+    bytes_of_vec (Png.encode (Png.slide_canvas f fr s))) in
+  let _ = write_bytes (dir ++ "/deck.pdf") (Pdf.of_pngs pngs) in
+  let _ = print ("  " ++ name ++ "  " ++ show (Deck.count d) ++ " slides -> index.html + deck.pdf") in
+  (name, d.title, Deck.count d);
+
+// The index. Deliberately plain: it is a list of talks, and a list of talks that
+// needs a stylesheet to be read is a list of talks nobody reads.
+let index_html = fn (rows: (str * str * int) list) ->
+  let b = strbuf_new () in
+  let _ = strbuf_push b ("<!doctype html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n"
+    ++ "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
+    ++ "<title>decks</title>\n<style>\n"
+    ++ "body \{ font: 16px/1.7 system-ui, -apple-system, 'Hiragino Sans', sans-serif;\n"
+    ++ "  max-width: 44rem; margin: 4rem auto; padding: 0 1.5rem; color: #16181d; }\n"
+    ++ "h1 \{ font-size: 1.4rem; margin: 0 0 0.4rem; }\n"
+    ++ "p.sub \{ color: #6b7280; margin: 0 0 2.5rem; }\n"
+    ++ "ul \{ list-style: none; padding: 0; }\n"
+    ++ "li \{ margin: 0 0 1.1rem; }\n"
+    ++ "a \{ color: #1a53c0; text-decoration: none; }\n"
+    ++ "a:hover \{ text-decoration: underline; }\n"
+    ++ ".d \{ color: #98a0ad; font-variant-numeric: tabular-nums; margin-right: 0.6rem; }\n"
+    ++ ".pdf \{ color: #98a0ad; margin-left: 0.5rem; font-size: 0.85em; }\n"
+    ++ "</style>\n</head>\n<body>\n<h1>decks</h1>\n"
+    ++ "<p class=\"sub\">Talks, built with <a href=\"https://github.com/284km/mslide\">mslide</a>.</p>\n<ul>\n") in
+  let _ = list_iter rows (fn (r: (str * str * int)) ->
+    let (name, title, n) = r in
+    // A directory named `YYYY-MM-DD-slug` shows its date; anything else shows
+    // its name, because inventing one would be worse than showing what is there.
+    let date = if str_len name >= 10 then substring name 0 10 else name in
+    let shown = if str_len title > 0 then title else name in
+    let _ = strbuf_push b ("<li><span class=\"d\">" ++ MarkdownHtml.escape_html date ++ "</span>"
+      ++ "<a href=\"" ++ name ++ "/\">" ++ MarkdownHtml.escape_html shown ++ "</a>"
+      ++ "<a class=\"pdf\" href=\"" ++ name ++ "/deck.pdf\">pdf</a></li>\n") in ()) in
+  let _ = strbuf_push b "</ul>\n</body>\n</html>\n" in
+  strbuf_to_str b;
+
+let fp = Bundled.font ();
+if str_len fp == 0 then
+  let _ = print ("build: " ++ Bundled.font_missing ()) in exit 1
+else
+  let f = Font.load fp in
+  let names = deck_dirs () in
+  let _ = if list_len names == 0 then print "build: no decks yet" else () in
+  let rows = list_map names (build_one f) in
+  let _ = write_file index_path (index_html rows) in
+  print ("built " ++ show (list_len rows) ++ " deck(s) + index.html")

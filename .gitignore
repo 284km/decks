@@ -1,0 +1,5 @@
+.mere_modules/
+_site/
+*.c
+build
+__pycache__/
