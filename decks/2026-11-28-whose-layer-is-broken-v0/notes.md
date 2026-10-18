@@ -5,7 +5,7 @@ Not part of the deck: `build.mere` reads `deck.md` only.
 ## What v0 is
 
 Every episode from the tower that is worth telling, with no regard for length:
-142 slides. The talk given on the day is made from this by subtraction. `v2/` is
+154 slides. The talk given on the day is made from this by subtraction. `v2/` is
 one such subtraction (36 slides, 20 minutes), the first draft (`../2026-11-28-
 whose-layer-is-broken/`) is the talk as it could be written at the proposal.
 
@@ -21,8 +21,25 @@ Chapters:
 | 5 | 遅さも、別の層にいる | 13 cases of CPU and memory, most with a first guess that was wrong |
 | 6 | 開発を進めたいだけなのに | three chains of bottlenecks chased one after another just to keep developing: the ruby/spec sweep (90 → 11 min in one day, ending in the compiler), test files too big to measure, the Ruby corpus timing out on the self-made CPU |
 | 7 | 1 つ直すと、次ができるようになる | three chains of unlocks: the self-made OS in one day, Fiber leading to CRuby's own tests running, the Ruby corpus on the self-made CPU one host capability at a time |
-| 8 | この発表自身 | the talk's own evidence, and its own correction |
-| 9 | 持ち帰ってほしいこと | the three lines |
+| 8 | パッチワーク: Ruby の中の Perl | Ruby as a blend (ruby-lang.org), and what implementing its Perl-derived parts took: `$~` per frame, the flip-flop, `$_`, `BEGIN`/`END`, `__END__`, ARGF |
+| 9 | この発表自身 | the talk's own evidence, and its own correction |
+| 10 | 持ち帰ってほしいこと | the lineage of "something other than me judges" (Perl's t/TEST, Raku's roast, ruby/spec), the three lines, and the patch that pulls away |
+
+The talk opens and closes on the conference theme, Patchwork: Larry Wall wrote
+`patch` (1985), and in 2019 approved the Raku rename with the parable of the
+patch of unshrunk cloth on an old garment. The main bug is that patch.
+
+## Sources outside the repositories
+
+| fact | where |
+|---|---|
+| theme "Patchwork": "small fabric pieces sewn together to create one large work"; the "Larry and Matz" session; 2026-11-27 to 29, Tokyo Big Sight | https://yapcjapan.org/2026tokyo/ |
+| theme and Larry Wall's participation | https://gihyo.jp/article/2026/08/yapc-tokyo-2026 |
+| Larry Wall wrote `patch`, posted to mod.sources in May 1985 | https://en.wikipedia.org/wiki/Patch_(Unix) |
+| "No one sews a patch of unshrunk cloth on an old garment, ..." (TimToady, 2019-10-11) | https://github.com/Raku/problem-solving/pull/89 |
+| "blended parts of his favorite languages (Perl, Smalltalk, Eiffel, Ada, and Lisp)" | https://www.ruby-lang.org/en/about/ |
+| TAP began with Perl 1.0's `t/TEST` (1988, Larry Wall) | https://testanything.org/history.html |
+| RubySpec was created in 2006 for Rubinius; revived as ruby/spec | https://en.wikipedia.org/wiki/RubySpec , https://github.com/ruby/spec |
 
 ## Where each case can be checked
 
@@ -79,6 +96,9 @@ first draft's `notes.md`.
 | 第 7 章 連鎖 1（自作 OS） | merelang/mere 727cbd9 (v0.1.185), 41ed9d4, 4687adf, d2343d4, 75c5be2, f90b6b5, 1076fb9, 1d96bb9, d2f577b ("preempted 3,727 times"), all 2026-08-11 |
 | 第 7 章 連鎖 2（Fiber から本家のテストへ） | merelang/mere 3d35e5a (v0.1.543), cd74e1e (v0.1.547), 514f8562 (v0.1.548), bd60dfec (v0.1.589), 930b4e3 (v0.1.625); mere-ruby 86ee8e1 (3,899), 40d8853 (4,232), a83677b (6,304); author's notes for the dates |
 | 第 7 章 連鎖 3（自作 CPU の上の Ruby） | merelang/mere ccd7a7c0 (v0.1.402), 369f2cf (v0.1.622), 385e436 (v0.1.623), v0.1.630–633, v0.1.645–647 (1fd1daf), 9b6a24e (v0.1.650); author's notes for each count |
+| 第 8 章 $~ はマッチしたフレームのもの / 10 個を退避すると 42% | mere-ruby 8fff991 |
+| 第 8 章 2 行目から 3 行目（flip-flop） | mere-ruby 9eff323 (command_line/dash_e_spec 5/4 -> 9/0) |
+| 第 8 章 小さな布地たち | mere-ruby 9694402 (`if /re/`), 8644051 (`$_` per thread, `$-a`/`$-l`/`$-p`), 77d6010 (`$;`), 3568500 (BEGIN/END), 78ae7be (`__END__`), 9fb3f78 (`$<` `$>` `$*`) |
 
 ## Not confirmed, so not on a slide
 

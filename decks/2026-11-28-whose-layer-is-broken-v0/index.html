@@ -47,9 +47,26 @@ a { color: #1a53c0; }
 <p>全部自分のコードのとき、どこを疑うか</p>
 <p>v0: 時間を考えない全部入り。当日版は、ここからの引き算</p>
 <p>284km ・ YAPC::Tokyo 2026</p>
-<div class="n">1 / 142</div>
+<div class="n">1 / 154</div>
 </section>
 <section id="s2">
+<h2>パッチワーク</h2>
+<p>YAPC::Tokyo 2026 のテーマ。「小さな布を縫い合わせて、1 つの大きな作品にする」</p>
+
+<ul>
+<li>差分を当てる道具 patch を書いたのは、Larry Wall（1985 年）</li>
+<li>今日の塔も、自分で書いた小さな布の縫い合わせ</li>
+</ul>
+<div class="n">2 / 154</div>
+</section>
+<section id="s3">
+<h2>継ぎ当てについて、Larry Wall が書いたこと</h2>
+<blockquote>No one sews a patch of unshrunk cloth on an old garment, for the patch will pull away from the garment, making the tear worse.</blockquote>
+<p>2019 年 10 月 11 日、Perl 6 を Raku に改名する提案への、賛成のコメント</p>
+<p>今日の話は、継ぎ当てが引きはがれた話です</p>
+<div class="n">3 / 154</div>
+</section>
+<section id="s4">
 <h2>今日の話</h2>
 
 <ul>
@@ -59,13 +76,13 @@ a { color: #1a53c0; }
 <li>そして、検査そのものに騙された話</li>
 </ul>
 <p>コンパイラ・CPU・言語処理系の知識は要りません</p>
-<div class="n">2 / 142</div>
+<div class="n">4 / 154</div>
 </section>
-<section id="s3">
+<section id="s5">
 <h1>第 0 章　塔</h1>
-<div class="n">3 / 142</div>
+<div class="n">5 / 154</div>
 </section>
-<section id="s4">
+<section id="s6">
 <h2>全部、自分で書いた</h2>
 
 <ul>
@@ -75,9 +92,9 @@ a { color: #1a53c0; }
 <li>その上で動く、自作の OS と、スケジューラと、シェル</li>
 <li>Ruby 処理系（Mere で書いた。4 万行超）</li>
 </ul>
-<div class="n">4 / 142</div>
+<div class="n">6 / 154</div>
 </section>
-<section id="s5">
+<section id="s7">
 <h2>道具も、だいたい自分で書いた</h2>
 
 <ul>
@@ -86,9 +103,9 @@ a { color: #1a53c0; }
 <li>Markdown、スライド作成（このスライド）</li>
 <li>ブラウザ、3D 描画、テキストエディタ、コンテナ基盤</li>
 </ul>
-<div class="n">5 / 142</div>
+<div class="n">7 / 154</div>
 </section>
-<section id="s6">
+<section id="s8">
 <h2>自作の層しかない、ということ</h2>
 
 <ul>
@@ -96,25 +113,25 @@ a { color: #1a53c0; }
 <li>自分の層だと、それが 1 つも来ない</li>
 <li>下の層を疑わない、という定石が使えない</li>
 </ul>
-<div class="n">6 / 142</div>
+<div class="n">8 / 154</div>
 </section>
-<section id="s7">
+<section id="s9">
 <h2>最初に、ひとつ選んでください</h2>
 <p>次の章に出てくる 3 つの容疑者のうち、犯人はどれか</p>
 <p>章の終わりで答え合わせをします</p>
-<div class="n">7 / 142</div>
+<div class="n">9 / 154</div>
 </section>
-<section id="s8">
+<section id="s10">
 <h1>第 1 章　puts 1 + 1</h1>
-<div class="n">8 / 142</div>
+<div class="n">10 / 154</div>
 </section>
-<section id="s9">
+<section id="s11">
 <h2>CPU を 32 ビットから 64 ビットに広げた</h2>
 <h1>puts 1 + 1</h1>
 <p>が通らない</p>
-<div class="n">9 / 142</div>
+<div class="n">11 / 154</div>
 </section>
-<section id="s10">
+<section id="s12">
 <h2>手を入れたのは、出す側と動かす側の両方</h2>
 
 <ul>
@@ -122,9 +139,9 @@ a { color: #1a53c0; }
 <li>書き換えは 149 箇所</li>
 <li>1 つのコミットではない</li>
 </ul>
-<div class="n">10 / 142</div>
+<div class="n">12 / 154</div>
 </section>
-<section id="s11">
+<section id="s13">
 <h2>定石どおり、境界はテストしてあった</h2>
 <table>
 <thead><tr><th>層</th><th>何と比べたか</th><th>結果</th></tr></thead>
@@ -133,15 +150,15 @@ a { color: #1a53c0; }
 <tr><td>3. CPU エミュレータ</td><td>同じ機械語を QEMU で実行</td><td>7 / 7 一致</td></tr>
 </tbody></table>
 <p>2026 年 9 月初め。全部、緑</p>
-<div class="n">11 / 142</div>
+<div class="n">13 / 154</div>
 </section>
-<section id="s12">
+<section id="s14">
 <h2>境界のテストが言えること</h2>
 <h1>試したプログラムでは、一致する</h1>
 <p>「その層が正しい」とは、言っていない</p>
-<div class="n">12 / 142</div>
+<div class="n">14 / 154</div>
 </section>
-<section id="s13">
+<section id="s15">
 <h2>容疑者は 3 人とも残る</h2>
 
 <ol>
@@ -150,9 +167,9 @@ a { color: #1a53c0; }
 <li>自作 CPU エミュレータ</li>
 </ol>
 <p>どれだと思いますか</p>
-<div class="n">13 / 142</div>
+<div class="n">15 / 154</div>
 </section>
-<section id="s14">
+<section id="s16">
 <h2>見当 1: 直前に手を入れた場所</h2>
 
 <ul>
@@ -160,9 +177,9 @@ a { color: #1a53c0; }
 <li>壊れた値の置き場所を追うと、関数が確保した範囲の外だった</li>
 <li>→ 置き場の数を数え間違えて、隣を踏んでいる</li>
 </ul>
-<div class="n">14 / 142</div>
+<div class="n">16 / 154</div>
 </section>
-<section id="s15">
+<section id="s17">
 <h2>見当 2: 前に一度壊れた仕組み</h2>
 
 <ul>
@@ -171,14 +188,14 @@ a { color: #1a53c0; }
 <li>呼び出しの前後で、値が変わって見えた</li>
 <li>→ 呼ばれた側が、書き戻し損ねている</li>
 </ul>
-<div class="n">15 / 142</div>
+<div class="n">17 / 154</div>
 </section>
-<section id="s16">
+<section id="s18">
 <h2>どちらも、証拠つき</h2>
 <h1>そして 2 回とも外れた</h1>
-<div class="n">16 / 142</div>
+<div class="n">18 / 154</div>
 </section>
-<section id="s17">
+<section id="s19">
 <h2>見当 1 を、検査に変える</h2>
 
 <ul>
@@ -186,27 +203,27 @@ a { color: #1a53c0; }
 <li>確保した数と、実際に使った数を、コンパイラ自身に比べさせる</li>
 <li>合わなければ、コンパイルを止める</li>
 </ul>
-<div class="n">17 / 142</div>
+<div class="n">19 / 154</div>
 </section>
-<section id="s18">
+<section id="s20">
 <h2>機械が言った</h2>
 <h1>reserved 2, used 17</h1>
 <p>関数 gc_collect で、確保 2 個・使用 17 個。疑いは当たっていた</p>
-<div class="n">18 / 142</div>
+<div class="n">20 / 154</div>
 </section>
-<section id="s19">
+<section id="s21">
 <h2>直した</h2>
 <p>溢れは、どのプログラムでもゼロになった</p>
 <h1>それでも puts 1 + 1 は通らない</h1>
-<div class="n">19 / 142</div>
+<div class="n">21 / 154</div>
 </section>
-<section id="s20">
+<section id="s22">
 <h2>実在の欠陥だった。でも、原因ではなかった</h2>
 <p>推測のままなら「直し方が悪かったのかも」と迷い続けたはず</p>
 <p>検査にしてあったから、当たりと原因を切り離せた</p>
-<div class="n">20 / 142</div>
+<div class="n">22 / 154</div>
 </section>
-<section id="s21">
+<section id="s23">
 <h2>見当 2 も、検査に変える</h2>
 
 <ul>
@@ -214,14 +231,14 @@ a { color: #1a53c0; }
 <li>呼ぶ前の値を覚えておき、戻ったときに照合する</li>
 </ul>
 <h1>一度も鳴らない</h1>
-<div class="n">21 / 142</div>
+<div class="n">23 / 154</div>
 </section>
-<section id="s22">
+<section id="s24">
 <h2>検査は、外れも確定させる</h2>
 <p>外れた分岐が閉じる。だから次に進める</p>
-<div class="n">22 / 142</div>
+<div class="n">24 / 154</div>
 </section>
-<section id="s23">
+<section id="s25">
 <h2>観察が、食い違い始めた</h2>
 
 <ul>
@@ -229,26 +246,26 @@ a { color: #1a53c0; }
 <li>ある監視は「書き換えなし」、別の監視は「書き換えあり」</li>
 <li>推理の結論:「壊れた値は、メモリのどこかにある」</li>
 </ul>
-<div class="n">23 / 142</div>
+<div class="n">25 / 154</div>
 </section>
-<section id="s24">
+<section id="s26">
 <h2>推理をやめて、出来上がった機械語を読む</h2>
 <p>逆アセンブル = 機械語を、人が読める命令の列に戻すこと</p>
 <p>壊れていた値（Ruby が変数を探すための表）を、読みにいく最初の命令は——</p>
-<div class="n">24 / 142</div>
+<div class="n">26 / 154</div>
 </section>
-<section id="s25">
+<section id="s27">
 <h1>mv a0, s10</h1>
 <p>メモリからではなく、CPU 自身の置き場（レジスタ s10）から取っている</p>
 <p>「メモリのどこか」は、丸ごと誤りだった</p>
-<div class="n">25 / 142</div>
+<div class="n">27 / 154</div>
 </section>
-<section id="s26">
+<section id="s28">
 <h2>s10 に書く命令は、その関数に 4 つだけ</h2>
 <p>うち 1 つが、例外から戻るときの書き戻しだった</p>
-<div class="n">26 / 142</div>
+<div class="n">28 / 154</div>
 </section>
-<section id="s27">
+<section id="s29">
 <h2>例外の仕組み</h2>
 
 <ul>
@@ -257,9 +274,9 @@ a { color: #1a53c0; }
 <li>退避には置き場所が要るので、メモリを一区画確保する</li>
 </ul>
 <p>よくある作り</p>
-<div class="n">27 / 142</div>
+<div class="n">29 / 154</div>
 </section>
-<section id="s28">
+<section id="s30">
 <h2>書いていた先は、区画の外</h2>
 <table>
 <thead><tr><th>意図</th><th>実際</th></tr></thead>
@@ -267,9 +284,9 @@ a { color: #1a53c0; }
 <tr><td>値の退避先</td><td>5〜14</td><td>20〜29</td></tr>
 </tbody></table>
 <p>区画の外は、まだ誰にも渡していない空き地</p>
-<div class="n">28 / 142</div>
+<div class="n">30 / 154</div>
 </section>
-<section id="s29">
+<section id="s31">
 <h2>空き地は、後から払い出される</h2>
 
 <ol>
@@ -279,22 +296,22 @@ a { color: #1a53c0; }
 <li>退避した値の上に、別のデータが書かれる</li>
 <li>失敗して書き戻すと、その別のデータが戻ってくる</li>
 </ol>
-<div class="n">29 / 142</div>
+<div class="n">31 / 154</div>
 </section>
-<section id="s30">
+<section id="s32">
 <h2>壊れていたのは 1 行</h2>
 <h3>前: 20 + i × 4 　先頭から 20 バイト目</h3>
 <h3>後: (20 + i) × wsz 　先頭から 20 個目</h3>
 <p>32 / 64 ビット両対応のための、機械的な置き換え。1 個 = 8 バイトなので、区画のはるか外</p>
-<div class="n">30 / 142</div>
+<div class="n">32 / 154</div>
 </section>
-<section id="s31">
+<section id="s33">
 <h2>答え合わせ</h2>
 <h1>2. 自作コンパイラが出した機械語</h1>
 <p>最初の見当「直前に手を入れた場所」は、方向としては合っていた。同じ作業の、別の 1 行だった</p>
-<div class="n">31 / 142</div>
+<div class="n">33 / 154</div>
 </section>
-<section id="s32">
+<section id="s34">
 <h2>では、なぜ緑だったのか</h2>
 
 <ul>
@@ -303,15 +320,15 @@ a { color: #1a53c0; }
 <li>でも、失敗する処理の中でメモリを確保していなかった</li>
 </ul>
 <p>確保 0 回なら通る。1 回で壊れる</p>
-<div class="n">32 / 142</div>
+<div class="n">34 / 154</div>
 </section>
-<section id="s33">
+<section id="s35">
 <h2>間違った場所から書き戻すのと</h2>
 <h2>まだ誰も書いていない場所から書き戻すのは</h2>
 <h1>出力が同じ</h1>
-<div class="n">33 / 142</div>
+<div class="n">35 / 154</div>
 </section>
-<section id="s34">
+<section id="s36">
 <h2>2 つの検査も、見えない場所にいた</h2>
 
 <ul>
@@ -319,9 +336,9 @@ a { color: #1a53c0; }
 <li>呼び出しの約束の検査: 「呼んで、戻る」の対しか見ない。例外の巻き戻しは「戻る」ではない</li>
 <li>どちらも黙っていた。どちらも正直だった</li>
 </ul>
-<div class="n">34 / 142</div>
+<div class="n">36 / 154</div>
 </section>
-<section id="s35">
+<section id="s37">
 <h2>32 ビットも、同じ変更からずっと壊れていた</h2>
 
 <ul>
@@ -329,9 +346,9 @@ a { color: #1a53c0; }
 <li>64 ビットに移った時点で、32 ビットで回すのをやめていた</li>
 <li>壊れたと気づく手段を、自分で捨てていた</li>
 </ul>
-<div class="n">35 / 142</div>
+<div class="n">37 / 154</div>
 </section>
-<section id="s36">
+<section id="s38">
 <h2>第 1 章で持ち帰るもの</h2>
 
 <ol>
@@ -340,13 +357,13 @@ a { color: #1a53c0; }
 <li>観察が食い違ったら、成果物を読む —— 成果物は構造を述べている</li>
 </ol>
 <p>ここから先は、同じ塔で起きた別の事件</p>
-<div class="n">36 / 142</div>
+<div class="n">38 / 154</div>
 </section>
-<section id="s37">
+<section id="s39">
 <h1>第 2 章　症状は、原因と別の層に出る</h1>
-<div class="n">37 / 142</div>
+<div class="n">39 / 154</div>
 </section>
-<section id="s38">
+<section id="s40">
 <h2>事件簿: 文字の d に、横棒が出る</h2>
 
 <ul>
@@ -354,9 +371,9 @@ a { color: #1a53c0; }
 <li>原因は自作のフォント処理。曲線の向きが変わる点で、線を 1 回多く数えていた</li>
 <li>本物のブラウザとの比較テストは 297 / 297 で通っていた。30 ピクセルの例が無かった</li>
 </ul>
-<div class="n">38 / 142</div>
+<div class="n">40 / 154</div>
 </section>
-<section id="s39">
+<section id="s41">
 <h2>正解を持たない検査</h2>
 
 <ul>
@@ -365,9 +382,9 @@ a { color: #1a53c0; }
 <li>古いコードで 87 点、直したコードで 0 点</li>
 <li>最初に見つけたのは、知らなかった組み合わせ（g の 12 ピクセル）</li>
 </ul>
-<div class="n">39 / 142</div>
+<div class="n">41 / 154</div>
 </section>
-<section id="s40">
+<section id="s42">
 <h2>事件簿: 3D の描画が、2 フレーム目で落ちる</h2>
 
 <ul>
@@ -376,9 +393,9 @@ a { color: #1a53c0; }
 <li>自作の 3D 描画だけが、2 フレーム目で落ちた</li>
 <li>前のフレームの値を、もう使い回された場所から読んでいた</li>
 </ul>
-<div class="n">40 / 142</div>
+<div class="n">42 / 154</div>
 </section>
-<section id="s41">
+<section id="s43">
 <h2>規則ごと、取り下げた</h2>
 
 <ul>
@@ -387,9 +404,9 @@ a { color: #1a53c0; }
 <li>初めて走らせた日に、別の出力先（Wasm）の、生きているバグを見つけた</li>
 </ul>
 <h1>700 のはずが -424242</h1>
-<div class="n">41 / 142</div>
+<div class="n">43 / 154</div>
 </section>
-<section id="s42">
+<section id="s44">
 <h2>事件簿: x86-64 でだけ、9 回目から NaN</h2>
 
 <ul>
@@ -398,9 +415,9 @@ a { color: #1a53c0; }
 <li>x86-64 でだけ、LLVM の出力先でだけ壊れる</li>
 <li>見つけたのは 3D 描画の CI。初めてこの出力を x86-64 で動かしたのがそれだった</li>
 </ul>
-<div class="n">42 / 142</div>
+<div class="n">44 / 154</div>
 </section>
-<section id="s43">
+<section id="s45">
 <h2>原因は、LLVM の最適化の 1 つ</h2>
 
 <ul>
@@ -409,9 +426,9 @@ a { color: #1a53c0; }
 <li>8 回目までは正しく、9 回目から崩れる。崖は計算ではなく状態を指す</li>
 <li>最適化パスを 1 つずつ外して、1 つに絞った</li>
 </ul>
-<div class="n">43 / 142</div>
+<div class="n">45 / 154</div>
 </section>
-<section id="s44">
+<section id="s46">
 <h2>事件簿: CI が、生まれてからずっと赤</h2>
 
 <ul>
@@ -420,9 +437,9 @@ a { color: #1a53c0; }
 <li>Ubuntu の clang は上限を守る。手元の Apple の clang は守らない</li>
 <li>最初の検査で落ちるので、その後ろの検査は 1 本も走っていなかった</li>
 </ul>
-<div class="n">44 / 142</div>
+<div class="n">46 / 154</div>
 </section>
-<section id="s45">
+<section id="s47">
 <h2>事件簿: 足し算の順番は、C コンパイラのもの</h2>
 <pre><code>
 p "one" ++ p "two" ++ p "three"
@@ -433,9 +450,9 @@ p "one" ++ p "two" ++ p "three"
 <li>同じ C を gcc でビルドすると three / two / one</li>
 <li>C は、式の中の評価順を決めていない</li>
 </ul>
-<div class="n">45 / 142</div>
+<div class="n">47 / 154</div>
 </section>
-<section id="s46">
+<section id="s48">
 <h2>事件簿: ループにしていたのは、clang だった</h2>
 
 <ul>
@@ -444,9 +461,9 @@ p "one" ++ p "two" ++ p "three"
 <li>clang の最適化が、たまたま平らにしてくれていた</li>
 <li>CPU エミュレータにコードを足したら、clang の判断が変わり、全部「スタック溢れ」</li>
 </ul>
-<div class="n">46 / 142</div>
+<div class="n">48 / 154</div>
 </section>
-<section id="s47">
+<section id="s49">
 <h2>同じ日に、もう 1 つ</h2>
 
 <ul>
@@ -456,9 +473,9 @@ p "one" ++ p "two" ++ p "three"
 <pre><code>
 {"MRB_B"=&gt;"2", "MRB_A"=&gt;"1"}
 </code></pre>
-<div class="n">47 / 142</div>
+<div class="n">49 / 154</div>
 </section>
-<section id="s48">
+<section id="s50">
 <h2>事件簿: CRC は、64 ビットでは偶然正しかった</h2>
 
 <ul>
@@ -467,9 +484,9 @@ p "one" ++ p "two" ++ p "three"
 <li>全部 1 は、32 ビットでは負の数、64 ビットでは正の数</li>
 <li>Ruby 処理系を 32 ビットの CPU で動かして、初めて壊れた。README の「gzip とバイト単位で一致」は、どの検査も確かめていなかった</li>
 </ul>
-<div class="n">48 / 142</div>
+<div class="n">50 / 154</div>
 </section>
-<section id="s49">
+<section id="s51">
 <h2>事件簿: 1 枚の画像が、2 つの違うファイルになる</h2>
 
 <ul>
@@ -478,9 +495,9 @@ p "one" ++ p "two" ++ p "three"
 <li>だから 0 のバイトが全部消えた。解釈実行では残った</li>
 <li>短い方のファイルも、画像としては開けてしまう</li>
 </ul>
-<div class="n">49 / 142</div>
+<div class="n">51 / 154</div>
 </section>
-<section id="s50">
+<section id="s52">
 <h2>事件簿: Ruby の定数表が、壊れていた</h2>
 
 <ul>
@@ -489,9 +506,9 @@ p "one" ++ p "two" ++ p "three"
 <li>原因は、メモリをまとめて巻き戻す仕組みが、外の辞書の中身まで回収していたこと</li>
 <li>同じプログラムが、解釈実行、C、LLVM、Wasm では全部正しかった</li>
 </ul>
-<div class="n">50 / 142</div>
+<div class="n">52 / 154</div>
 </section>
-<section id="s51">
+<section id="s53">
 <h2>事件簿: CPU 0% で、止まる</h2>
 
 <ul>
@@ -500,9 +517,9 @@ p "one" ++ p "two" ++ p "three"
 <li>原因は自作言語の実行時ライブラリ。辞書を使い回すとき、区画を本当より大きく 4 KB と主張して、隣を踏んでいた</li>
 <li>壊れた例外メッセージで巨大な確保が失敗し、ロックを持ったまま止まっていた</li>
 </ul>
-<div class="n">51 / 142</div>
+<div class="n">53 / 154</div>
 </section>
-<section id="s52">
+<section id="s54">
 <h2>決め手は、アドレスではなかった</h2>
 
 <ul>
@@ -510,9 +527,9 @@ p "one" ++ p "two" ++ p "three"
 <li>決めたのは、壊れた場所ではなく「その領域を誰が確保したか」の行だった</li>
 <li>使用後解放に見えて、実ははみ出しだった</li>
 </ul>
-<div class="n">52 / 142</div>
+<div class="n">54 / 154</div>
 </section>
-<section id="s53">
+<section id="s55">
 <h2>事件簿: 同じ処理が 4 つ、それぞれずれていた</h2>
 
 <ul>
@@ -521,9 +538,9 @@ p "one" ++ p "two" ++ p "three"
 <li>Wasm では == が間違い、LLVM では存在しない関数を呼んでいた</li>
 <li>1 つにまとめた日に、両方消えた</li>
 </ul>
-<div class="n">53 / 142</div>
+<div class="n">55 / 154</div>
 </section>
-<section id="s54">
+<section id="s56">
 <h2>事件簿: popen 1 回で、メモリが 33 MB → 537 MB</h2>
 
 <ul>
@@ -532,9 +549,9 @@ p "one" ++ p "two" ++ p "three"
 <li>「指されている区画は詰め直さない」規則で、詰め直しが永久に止まった</li>
 <li>Hash の置き場が 33 → 134 → 537 MB と伸びた</li>
 </ul>
-<div class="n">54 / 142</div>
+<div class="n">56 / 154</div>
 </section>
-<section id="s55">
+<section id="s57">
 <h2>事件簿: 整数の幅が、3 つある</h2>
 
 <ul>
@@ -542,13 +559,13 @@ p "one" ++ p "two" ++ p "three"
 <li>コンパイラは OCaml で書いていて、OCaml の整数は 63 ビット。2^63 - 1 をそのまま書けない</li>
 <li>clang -O2 は、溢れた後に確かめる検査を消す（溢れは C では未定義）</li>
 </ul>
-<div class="n">55 / 142</div>
+<div class="n">57 / 154</div>
 </section>
-<section id="s56">
+<section id="s58">
 <h1>第 3 章　2 つの誤りが重なると、正しい出力になる</h1>
-<div class="n">56 / 142</div>
+<div class="n">58 / 154</div>
 </section>
-<section id="s57">
+<section id="s59">
 <h2>事件簿: 印字は、ずっと正しかった</h2>
 
 <ul>
@@ -557,15 +574,15 @@ p "one" ++ p "two" ++ p "three"
 <li>出力は正しい。テストは緑</li>
 <li>エミュレータを本物に近づけた瞬間、印字が壊れた（2026 年 10 月）</li>
 </ul>
-<div class="n">57 / 142</div>
+<div class="n">59 / 154</div>
 </section>
-<section id="s58">
+<section id="s60">
 <h2>コードにはコメントまであった</h2>
 <h3>「エミュレータは番号を無視する。QEMU は無視しない」</h3>
 <p>そのコメントの所は直してあった。同じ形の印字と失敗の経路、ほかの 5 箇所は直っていなかった</p>
-<div class="n">58 / 142</div>
+<div class="n">60 / 154</div>
 </section>
-<section id="s59">
+<section id="s61">
 <h2>事件簿: 本家 ruby との一致が 2,589 件</h2>
 
 <ul>
@@ -573,9 +590,9 @@ p "one" ++ p "two" ++ p "three"
 <li>その部品は、テストの一部を何もせずに通していた</li>
 <li>両側で同じ部品が動くので、両側とも同じように何もしない。数えると「一致」</li>
 </ul>
-<div class="n">59 / 142</div>
+<div class="n">61 / 154</div>
 </section>
-<section id="s60">
+<section id="s62">
 <h2>何もしていなかったもの</h2>
 
 <ul>
@@ -584,9 +601,9 @@ p "one" ++ p "two" ++ p "three"
 <li>「例外が出ないこと」の検査は、存在しなかった（155 箇所、両側でエラー）</li>
 <li>本物どおりに直したら、一致は 2,589 → 2,221。本物の穴も 10 個近く出てきた</li>
 </ul>
-<div class="n">60 / 142</div>
+<div class="n">62 / 154</div>
 </section>
-<section id="s61">
+<section id="s63">
 <h2>直したあとの比較でも、1 回騙された</h2>
 
 <ul>
@@ -594,9 +611,9 @@ p "one" ++ p "two" ++ p "three"
 <li>テストの中の exit! が、比較の部品ごと殺していた</li>
 <li>「集計なし」のほとんどが、計器自身の失敗だった</li>
 </ul>
-<div class="n">61 / 142</div>
+<div class="n">63 / 154</div>
 </section>
-<section id="s62">
+<section id="s64">
 <h2>事件簿: ソケットのテストが、パスの長さを測っていた</h2>
 
 <ul>
@@ -605,9 +622,9 @@ p "one" ++ p "two" ++ p "three"
 <li>短いパスから測ると 0 / 8</li>
 <li>標準ライブラリの一致数は 416 → 396。今は 72 バイトを越える場所からの記録を断る</li>
 </ul>
-<div class="n">62 / 142</div>
+<div class="n">64 / 154</div>
 </section>
-<section id="s63">
+<section id="s65">
 <h2>事件簿: 殺されたファイルが、98 / 98 の緑</h2>
 
 <ul>
@@ -615,9 +632,9 @@ p "one" ++ p "two" ++ p "three"
 <li>比較の側は「名前が出て、報告に無い」を「通った」と数えていた</li>
 <li>メモリの番人に殺されたファイルは、走った分が全部「一致」になった</li>
 </ul>
-<div class="n">63 / 142</div>
+<div class="n">65 / 154</div>
 </section>
-<section id="s64">
+<section id="s66">
 <h2>直した版の方が、悪く見えた</h2>
 
 <ul>
@@ -626,9 +643,9 @@ p "one" ++ p "two" ++ p "three"
 <li>古い版は 98 本目で 13 GB まで膨らみ、報告を 1 行も出さずに死んでいた</li>
 <li>新しい値の方が正しかった</li>
 </ul>
-<div class="n">64 / 142</div>
+<div class="n">66 / 154</div>
 </section>
-<section id="s65">
+<section id="s67">
 <h2>事件簿: 道具が無ければ、成功</h2>
 
 <ul>
@@ -637,9 +654,9 @@ p "one" ++ p "two" ++ p "three"
 <li>どちらも単独なら妥当。重なると、検査が消えても CI は緑</li>
 <li>数えたら 65 本が同じ形。46 本が CI に居た</li>
 </ul>
-<div class="n">65 / 142</div>
+<div class="n">67 / 154</div>
 </section>
-<section id="s66">
+<section id="s68">
 <h2>それを塞ぐ検査も、最初は自分を通した</h2>
 
 <ul>
@@ -647,9 +664,9 @@ p "one" ++ p "two" ++ p "three"
 <li>最初の版は、名前が直接書いてある道具しか読まなかった</li>
 <li>きっかけの $QEMU を見落とし、「必須 0 個」と言って自分自身を通した</li>
 </ul>
-<div class="n">66 / 142</div>
+<div class="n">68 / 154</div>
 </section>
-<section id="s67">
+<section id="s69">
 <h2>事件簿: どの CI にも居ない検査</h2>
 
 <ul>
@@ -658,9 +675,9 @@ p "one" ++ p "two" ++ p "three"
 <li>1 を 60 ビット左にずらすと、C では 1152921504606846976、32 ビットの CPU では 0</li>
 <li>別の問いのために足したテストが、この検査を赤にしたまま放置されていた</li>
 </ul>
-<div class="n">67 / 142</div>
+<div class="n">69 / 154</div>
 </section>
-<section id="s68">
+<section id="s70">
 <h2>事件簿: 全部走らせたら、3 本赤</h2>
 
 <ul>
@@ -669,9 +686,9 @@ p "one" ++ p "two" ++ p "three"
 <li>毎回「関係しそうな検査」だけ走らせていた</li>
 <li>その直後、CI 自体も 4 版続けて赤だった（CI の機械に dune の道が通っていなかった）</li>
 </ul>
-<div class="n">68 / 142</div>
+<div class="n">70 / 154</div>
 </section>
-<section id="s69">
+<section id="s71">
 <h2>事件簿: 毒見が、黙って力を失う</h2>
 
 <ul>
@@ -680,9 +697,9 @@ p "one" ++ p "two" ++ p "three"
 <li>別の毒見は、63 回中 2 回、緑になった。どちらも機械が重いとき</li>
 <li>解放した場所が、たまたま再利用されなかった</li>
 </ul>
-<div class="n">69 / 142</div>
+<div class="n">71 / 154</div>
 </section>
-<section id="s70">
+<section id="s72">
 <h2>毒見は、壊して測る</h2>
 
 <ul>
@@ -690,9 +707,9 @@ p "one" ++ p "two" ++ p "three"
 <li>割り当て器自身に、解放時に中身を壊させた</li>
 <li>39 本全部が赤。正しい版は緑のまま</li>
 </ul>
-<div class="n">70 / 142</div>
+<div class="n">72 / 154</div>
 </section>
-<section id="s71">
+<section id="s73">
 <h2>事件簿: ランダムでは、壊れない</h2>
 
 <ul>
@@ -701,9 +718,9 @@ p "one" ++ p "two" ++ p "three"
 <li>壊れたのは、PNG が実際に作るデータの形のときだけ</li>
 <li>その 3,104 バイトを、そのままテストに入れた</li>
 </ul>
-<div class="n">71 / 142</div>
+<div class="n">73 / 154</div>
 </section>
-<section id="s72">
+<section id="s74">
 <h2>事件簿: 答え合わせの相手が、何も確かめていなかった</h2>
 
 <ul>
@@ -712,9 +729,9 @@ p "one" ++ p "two" ++ p "three"
 <li>本家は 0 本の検査で「通って」いた。eval の中の return がテストのメソッドごと抜けていた</li>
 <li>本当の差は、自作 Ruby の eval の return だった</li>
 </ul>
-<div class="n">72 / 142</div>
+<div class="n">74 / 154</div>
 </section>
-<section id="s73">
+<section id="s75">
 <h2>事件簿: 落ちるはずのない検査</h2>
 
 <ul>
@@ -723,9 +740,9 @@ p "one" ++ p "two" ++ p "three"
 <li>i32.mul を探していたが、利用者のコードにあるのは i64.mul</li>
 <li>確かめ方が空虚なので、言っていることが間違っていても緑になっていた</li>
 </ul>
-<div class="n">73 / 142</div>
+<div class="n">75 / 154</div>
 </section>
-<section id="s74">
+<section id="s76">
 <h2>事件簿: データベースの検査が、黙って飛ぶ</h2>
 
 <ul>
@@ -733,9 +750,9 @@ p "one" ++ p "two" ++ p "three"
 <li>postgres は icu4c 74 を求め、Homebrew は 78 に上げていた</li>
 <li>postgres が起動できず、検査 3 本が、走らずに成功していた</li>
 </ul>
-<div class="n">74 / 142</div>
+<div class="n">76 / 154</div>
 </section>
-<section id="s75">
+<section id="s77">
 <h2>2 つの誤りが重なると、正しい出力になる</h2>
 
 <ul>
@@ -745,13 +762,13 @@ p "one" ++ p "two" ++ p "three"
 <li>パスが長い × 両側で同じように飛ばす</li>
 </ul>
 <p>比較が見ているのは、出力だけ</p>
-<div class="n">75 / 142</div>
+<div class="n">77 / 154</div>
 </section>
-<section id="s76">
+<section id="s78">
 <h1>第 4 章　答え合わせの相手にも、層がある</h1>
-<div class="n">76 / 142</div>
+<div class="n">78 / 154</div>
 </section>
-<section id="s77">
+<section id="s79">
 <h2>事件簿: 本家 ruby は、掛け算と足し算を 1 命令にしていた</h2>
 
 <ul>
@@ -760,9 +777,9 @@ p "one" ++ p "two" ++ p "three"
 <li>自作言語の a × b + c は、まとめない</li>
 <li>合わせるには、明示的に fma を呼ぶしかなかった</li>
 </ul>
-<div class="n">77 / 142</div>
+<div class="n">79 / 154</div>
 </section>
-<section id="s78">
+<section id="s80">
 <h2>事件簿: macOS の数学関数は、正しく丸めていない</h2>
 
 <ul>
@@ -771,9 +788,9 @@ p "one" ++ p "two" ++ p "three"
 <li>Mac の ruby の方が 1 ulp ずれていた</li>
 <li>基準を「手元の数学ライブラリのビット」から「正しく丸めた値」に移した</li>
 </ul>
-<div class="n">78 / 142</div>
+<div class="n">80 / 154</div>
 </section>
-<section id="s79">
+<section id="s81">
 <h2>事件簿: 本家 ruby の版と機械も、答えを変える</h2>
 
 <ul>
@@ -782,19 +799,19 @@ p "one" ++ p "two" ++ p "three"
 <li>ソケットの定数は、macOS と Linux で違う</li>
 <li>だから当時の CI は、答え合わせを macOS の ruby 3.2.2 に固定していた（今は 4.0.6）</li>
 </ul>
-<div class="n">79 / 142</div>
+<div class="n">81 / 154</div>
 </section>
-<section id="s80">
+<section id="s82">
 <h2>答え合わせの相手は、下の層ではない</h2>
 <p>本家 ruby も、clang でビルドされ、手元の数学ライブラリの上で動く、1 つの C プログラム</p>
 <p>「下の層は正しい」は、答え合わせの相手にも仮定</p>
-<div class="n">80 / 142</div>
+<div class="n">82 / 154</div>
 </section>
-<section id="s81">
+<section id="s83">
 <h1>第 5 章　遅さも、別の層にいる</h1>
-<div class="n">81 / 142</div>
+<div class="n">83 / 154</div>
 </section>
-<section id="s82">
+<section id="s84">
 <h2>事件簿: 圧縮しない圧縮器</h2>
 
 <ul>
@@ -803,9 +820,9 @@ p "one" ++ p "two" ++ p "three"
 <li>コンテナの層（8.9 MB）を圧縮させたら 369 秒。gzip は 0.1 秒</li>
 <li>毎回すべての距離を総当たりしていた。直して 1.3 秒（250 倍）</li>
 </ul>
-<div class="n">82 / 142</div>
+<div class="n">84 / 154</div>
 </section>
-<section id="s83">
+<section id="s85">
 <h2>同じ圧縮器の、ほかの 2 つ</h2>
 
 <ul>
@@ -813,9 +830,9 @@ p "one" ++ p "two" ++ p "three"
 <li>入力を全部いっぺんに 2 回分解していた。9 MB の入力で、使用メモリの最大が 489 MB</li>
 <li>1 GiB の機械で動かす予定のデーモンだった</li>
 </ul>
-<div class="n">83 / 142</div>
+<div class="n">85 / 154</div>
 </section>
-<section id="s84">
+<section id="s86">
 <h2>事件簿: このスライドが、1 枚 25 秒</h2>
 
 <ul>
@@ -824,9 +841,9 @@ p "one" ++ p "two" ++ p "three"
 <li>直したはずの圧縮器は、PNG の部品が古い版に固定したままだった。2 つ下のライブラリ</li>
 <li>固定を上げて、33 枚で 3 秒。画素は 1 つも変わらない</li>
 </ul>
-<div class="n">84 / 142</div>
+<div class="n">86 / 154</div>
 </section>
-<section id="s85">
+<section id="s87">
 <h2>事件簿: Hash 1 つに、索引 1 つ</h2>
 
 <ul>
@@ -835,9 +852,9 @@ p "one" ++ p "two" ++ p "three"
 <li>Hash ごとの索引が、二度と返らない共有の領域に置かれていた</li>
 <li>小さな Hash は索引を持たない（CRuby と同じ考え）。2,288 MB → 201 MB</li>
 </ul>
-<div class="n">85 / 142</div>
+<div class="n">87 / 154</div>
 </section>
-<section id="s86">
+<section id="s88">
 <h2>事件簿: 安全の検査が、1 時間終わらない</h2>
 
 <ul>
@@ -846,9 +863,9 @@ p "one" ++ p "two" ++ p "three"
 <li>止まっている処理は最大 1,000 個。csv のベンチマークが 1 時間で終わらない</li>
 <li>最初の直し（結果を覚える）は、時間を並べ替えに移しただけだった</li>
 </ul>
-<div class="n">86 / 142</div>
+<div class="n">88 / 154</div>
 </section>
-<section id="s87">
+<section id="s89">
 <h2>問いを狭める</h2>
 
 <ul>
@@ -858,9 +875,9 @@ p "one" ++ p "two" ++ p "three"
 <li>元の速さの 4〜16% 増しまで戻った</li>
 </ul>
 <p>検査の値段は、呼ばれる頻度で決まる</p>
-<div class="n">87 / 142</div>
+<div class="n">89 / 154</div>
 </section>
-<section id="s88">
+<section id="s90">
 <h2>事件簿: 計画に書いた原因は、2 つとも外れた</h2>
 
 <ul>
@@ -869,9 +886,9 @@ p "one" ++ p "two" ++ p "three"
 <li>見当 2:「この変数がメモリを掴んでいる」</li>
 <li>外しても、メモリも物の数も変わらない</li>
 </ul>
-<div class="n">88 / 142</div>
+<div class="n">90 / 154</div>
 </section>
-<section id="s89">
+<section id="s91">
 <h2>本当の原因</h2>
 
 <ul>
@@ -879,9 +896,9 @@ p "one" ++ p "two" ++ p "three"
 <li>80,000.times { lambda } が 827 MB → 149 MB</li>
 <li>ついでに ruby -e 1 の起動が 244 MB → 46 MB（本家は 19 MB）</li>
 </ul>
-<div class="n">89 / 142</div>
+<div class="n">91 / 154</div>
 </section>
-<section id="s90">
+<section id="s92">
 <h2>事件簿: 1 行で、169 MiB → 3.5 MiB</h2>
 
 <ul>
@@ -890,9 +907,9 @@ p "one" ++ p "two" ++ p "three"
 <li>169 MiB → 5.8 MiB。さらに型の印を指し先に詰めて 3.5 MiB</li>
 <li>比較: Rust 5.5、C 3.3、Go 11.8 MiB</li>
 </ul>
-<div class="n">90 / 142</div>
+<div class="n">92 / 154</div>
 </section>
-<section id="s91">
+<section id="s93">
 <h2>でも、LLVM の出力先では回収していなかった</h2>
 
 <ul>
@@ -900,9 +917,9 @@ p "one" ++ p "two" ++ p "three"
 <li>出力は同じなので、出力先どうしの比較テストには見えない</li>
 <li>直して 5.8 MB</li>
 </ul>
-<div class="n">91 / 142</div>
+<div class="n">93 / 154</div>
 </section>
-<section id="s92">
+<section id="s94">
 <h2>事件簿: 自作の CPU で、命令を数える</h2>
 
 <ul>
@@ -911,9 +928,9 @@ p "one" ++ p "two" ++ p "three"
 <li>辞書の操作が 61%。機械語で書き直し、その他いくつかを直して 8 億 5,800 万命令（−47%）</li>
 <li>次の計画は、数えたら全体の 1% だと分かって、やめた</li>
 </ul>
-<div class="n">92 / 142</div>
+<div class="n">94 / 154</div>
 </section>
-<section id="s93">
+<section id="s95">
 <h2>事件簿: gsub 10 万回で 1 GB</h2>
 
 <ul>
@@ -922,9 +939,9 @@ p "one" ++ p "two" ++ p "three"
 <li>デバッガが遅すぎるので、生成した C に目印を埋めて、誰が作ったかを引いた</li>
 <li>1.76 秒、181 MB</li>
 </ul>
-<div class="n">93 / 142</div>
+<div class="n">95 / 154</div>
 </section>
-<section id="s94">
+<section id="s96">
 <h2>事件簿: 測って、作ったものを捨てた</h2>
 
 <ul>
@@ -933,9 +950,9 @@ p "one" ++ p "two" ++ p "three"
 <li>7 回ずつ走らせて、最速はどちらも 3.71 秒</li>
 <li>戻した</li>
 </ul>
-<div class="n">94 / 142</div>
+<div class="n">96 / 154</div>
 </section>
-<section id="s95">
+<section id="s97">
 <h2>事件簿: 時間切れではなく、メモリの番人だった</h2>
 
 <ul>
@@ -944,9 +961,9 @@ p "one" ++ p "two" ++ p "three"
 <li>殺していたのは、6 GB を越えたら殺す番人。元の版も 5.9 GB で、すれすれだった</li>
 <li>番人の記録を、最初に見るべきだった</li>
 </ul>
-<div class="n">95 / 142</div>
+<div class="n">97 / 154</div>
 </section>
-<section id="s96">
+<section id="s98">
 <h2>その後</h2>
 
 <ul>
@@ -954,9 +971,9 @@ p "one" ++ p "two" ++ p "three"
 <li>回収のたびに、今まで作った文字列と Hash の番号を全部調べ直していた</li>
 <li>CPU 時間 490 秒 → 73 秒</li>
 </ul>
-<div class="n">96 / 142</div>
+<div class="n">98 / 154</div>
 </section>
-<section id="s97">
+<section id="s99">
 <h2>事件簿: 1 GB のファイルを開く</h2>
 
 <ul>
@@ -965,9 +982,9 @@ p "one" ++ p "two" ++ p "three"
 <li>計測の道具は、最初「↓キーに 823 ms」と言った</li>
 <li>起動の途中から測っていた。数字が悪いほど、まず計器を疑う</li>
 </ul>
-<div class="n">97 / 142</div>
+<div class="n">99 / 154</div>
 </section>
-<section id="s98">
+<section id="s100">
 <h2>事件簿: 測ったのは、古いファイルだった</h2>
 
 <ul>
@@ -976,9 +993,9 @@ p "one" ++ p "two" ++ p "three"
 <li>本物は 1,064,718 バイト。使わない関数を刈り取って 616,025 バイト（−42%）</li>
 <li>違うものを測っても、測ったようにしか見えない</li>
 </ul>
-<div class="n">98 / 142</div>
+<div class="n">100 / 154</div>
 </section>
-<section id="s99">
+<section id="s101">
 <h2>事件簿: 1,000 個の関数が、1 つの塊</h2>
 
 <ul>
@@ -987,13 +1004,13 @@ p "one" ++ p "two" ++ p "three"
 <li>コンパイラの 4 つの処理が、関数の数の 2 乗で遅くなっていた</li>
 <li>113 秒 → 14 秒</li>
 </ul>
-<div class="n">99 / 142</div>
+<div class="n">101 / 154</div>
 </section>
-<section id="s100">
+<section id="s102">
 <h1>第 6 章　開発を進めたいだけなのに</h1>
-<div class="n">100 / 142</div>
+<div class="n">102 / 154</div>
 </section>
-<section id="s101">
+<section id="s103">
 <h2>Ruby 処理系の開発は、こう回る</h2>
 
 <ul>
@@ -1002,9 +1019,9 @@ p "one" ++ p "two" ++ p "three"
 <li>一致が増えたか、減ったかを見る</li>
 </ul>
 <p>その 1 周が、遅くなっていった</p>
-<div class="n">101 / 142</div>
+<div class="n">103 / 154</div>
 </section>
-<section id="s102">
+<section id="s104">
 <h2>連鎖 1: 仕様テストの 1 周が 90 分</h2>
 
 <ul>
@@ -1012,9 +1029,9 @@ p "one" ++ p "two" ++ p "three"
 <li>1 日に何周もできない。開発が止まる</li>
 <li>まず、処理系を速くしなければ、と思う</li>
 </ul>
-<div class="n">102 / 142</div>
+<div class="n">104 / 154</div>
 </section>
-<section id="s103">
+<section id="s105">
 <h2>推測しないで、1 本を測った</h2>
 <table>
 <thead><tr><th>時間</th></tr></thead>
@@ -1023,9 +1040,9 @@ p "one" ++ p "two" ++ p "three"
 <tr><td>OS の中で使った時間</td><td>1.89 秒</td></tr>
 </tbody></table>
 <p>遅いのは処理系ではなかった</p>
-<div class="n">103 / 142</div>
+<div class="n">105 / 154</div>
 </section>
-<section id="s104">
+<section id="s106">
 <h2>テストの道具が、ファイルをコピーしていた</h2>
 
 <ul>
@@ -1034,15 +1051,15 @@ p "one" ++ p "two" ++ p "three"
 <li>macOS のファイル監視が、その後何時間も 100% を越え、6 GB を使い続けた</li>
 <li>ほかの作業まで最大 8 倍遅くなり、それを処理系の止まりだと思って 1 時間失った</li>
 </ul>
-<div class="n">104 / 142</div>
+<div class="n">106 / 154</div>
 </section>
-<section id="s105">
+<section id="s107">
 <h2>1 周に 1 回だけ作る</h2>
 <h1>90 分 → 30 分</h1>
 <p>記録は 1 バイトも変わらない</p>
-<div class="n">105 / 142</div>
+<div class="n">107 / 154</div>
 </section>
-<section id="s106">
+<section id="s108">
 <h2>次: 10 コアのうち、0.58 しか使っていない</h2>
 
 <ul>
@@ -1050,9 +1067,9 @@ p "one" ++ p "two" ++ p "three"
 <li>30 分 → 9 分</li>
 <li>ところが、同じバイナリで、記録が 3 通り出た</li>
 </ul>
-<div class="n">106 / 142</div>
+<div class="n">108 / 154</div>
 </section>
-<section id="s107">
+<section id="s109">
 <h2>制限が、全部壁時計だった</h2>
 
 <ul>
@@ -1061,9 +1078,9 @@ p "one" ++ p "two" ++ p "three"
 <li>CPU 時間の制限（25 秒）に変え、実時間はその 24 倍まで待つ</li>
 <li>メモリの番人も、掃き自身が起動するようにした</li>
 </ul>
-<div class="n">107 / 142</div>
+<div class="n">109 / 154</div>
 </section>
-<section id="s108">
+<section id="s110">
 <h2>まだ揺れる: シグナルが受け継がれていた</h2>
 
 <ul>
@@ -1072,9 +1089,9 @@ p "one" ++ p "two" ++ p "three"
 <li>Ctrl-C を自分に送って確かめるテストの振る舞いが変わっていた</li>
 <li>直して 1,829.7 秒 → 661.6 秒。記録の行は 1 つも動かない</li>
 </ul>
-<div class="n">108 / 142</div>
+<div class="n">110 / 154</div>
 </section>
-<section id="s109">
+<section id="s111">
 <h2>並べ方の工夫は、2 案とも遅かった</h2>
 
 <ul>
@@ -1083,9 +1100,9 @@ p "one" ++ p "two" ++ p "three"
 <li>6 並列で、使っているのは 10 コアのうち 2.09。その半分が OS の中</li>
 <li>律速は、共有のファイルシステムだった</li>
 </ul>
-<div class="n">109 / 142</div>
+<div class="n">111 / 154</div>
 </section>
-<section id="s110">
+<section id="s112">
 <h2>次: ビルドの検査 29 秒のうち 22 秒</h2>
 
 <ul>
@@ -1094,9 +1111,9 @@ p "one" ++ p "two" ++ p "three"
 <li>1,950 万回の行の走査</li>
 <li>1 回の awk にまとめて 0.64 秒。検査全体は 29 秒 → 4.95 秒</li>
 </ul>
-<div class="n">110 / 142</div>
+<div class="n">112 / 154</div>
 </section>
-<section id="s111">
+<section id="s113">
 <h2>次: 残りはコンパイラの中</h2>
 
 <ul>
@@ -1105,9 +1122,9 @@ p "one" ++ p "two" ++ p "three"
 <li>型を調べるとき、名前を連想リストで探していた。9 万回の検索、平均の深さ 1,184</li>
 <li>4 つの処理が 2 乗。113 秒 → 14 秒。出力 5,045 個はバイト単位で同じ</li>
 </ul>
-<div class="n">111 / 142</div>
+<div class="n">113 / 154</div>
 </section>
-<section id="s112">
+<section id="s114">
 <h2>1 日で追った順番</h2>
 
 <ol>
@@ -1120,9 +1137,9 @@ p "one" ++ p "two" ++ p "three"
 <li>コンパイラ（型検査の 2 乗）</li>
 </ol>
 <p>処理系を速くしたかったのに、処理系はずっと最後だった</p>
-<div class="n">112 / 142</div>
+<div class="n">114 / 154</div>
 </section>
-<section id="s113">
+<section id="s115">
 <h2>連鎖 2: テストのファイルが、測れない</h2>
 
 <ul>
@@ -1130,9 +1147,9 @@ p "one" ++ p "two" ++ p "three"
 <li>殺されたファイルは、一致したかどうかすら分からない</li>
 <li>速さ以前に、測れない</li>
 </ul>
-<div class="n">113 / 142</div>
+<div class="n">115 / 154</div>
 </section>
-<section id="s114">
+<section id="s116">
 <h2>原因は 1 つではなかった</h2>
 
 <ul>
@@ -1141,9 +1158,9 @@ p "one" ++ p "two" ++ p "three"
 <li>test/unit は、ファイル全体を at_exit のブロックの中で走らせる</li>
 <li>だから 1 本の間、Ruby のオブジェクトは 1 つも回収されない</li>
 </ul>
-<div class="n">114 / 142</div>
+<div class="n">116 / 154</div>
 </section>
-<section id="s115">
+<section id="s117">
 <h2>番人は、ビルドまで殺していた</h2>
 
 <ul>
@@ -1151,9 +1168,9 @@ p "one" ++ p "two" ++ p "three"
 <li>mere-ruby をビルドする clang も、出力先の名前に mere-ruby を含む</li>
 <li>clang は 6 GB を越える。掃きの最中にビルドすると「暴走」として殺された</li>
 </ul>
-<div class="n">115 / 142</div>
+<div class="n">117 / 154</div>
 </section>
-<section id="s116">
+<section id="s118">
 <h2>回収を、別のコルーチンで走らせる</h2>
 
 <ul>
@@ -1162,9 +1179,9 @@ p "one" ++ p "two" ++ p "three"
 <li>そうしたら、Fiber にもあった穴が 2 つ出てきた。穴のある版では、一致が 3,471 → 1,609 に落ちた</li>
 <li>自作言語の側で穴を直して、3,527</li>
 </ul>
-<div class="n">116 / 142</div>
+<div class="n">118 / 154</div>
 </section>
-<section id="s117">
+<section id="s119">
 <h2>次々に出てくる、2 乗</h2>
 
 <ul>
@@ -1173,9 +1190,9 @@ p "one" ++ p "two" ++ p "three"
 <li>文字列の組み込みが 2 乗: 100 MB の bytes に 12〜16 GB</li>
 </ul>
 <p>1 つ直すと、次のファイルが最後まで走り、次の 2 乗が見える</p>
-<div class="n">117 / 142</div>
+<div class="n">119 / 154</div>
 </section>
-<section id="s118">
+<section id="s120">
 <h2>連鎖 3: 自作 CPU の上の Ruby が、時間切れ</h2>
 
 <ul>
@@ -1183,9 +1200,9 @@ p "one" ++ p "two" ++ p "three"
 <li>3 本が時間切れ</li>
 <li>CPU エミュレータに、命令ごとの実行回数を数えさせた</li>
 </ul>
-<div class="n">118 / 142</div>
+<div class="n">120 / 154</div>
 </section>
-<section id="s119">
+<section id="s121">
 <h2>数えた順に、直す</h2>
 
 <ul>
@@ -1194,9 +1211,9 @@ p "one" ++ p "two" ++ p "three"
 <li>文字列比較の 89% がリテラルとの比較 → その場に展開: 3 億 4,900 万</li>
 <li>遠くへの分岐を、近いものは短く: 3 億 6,490 万 → 3 億 1,170 万（−14.6%）</li>
 </ul>
-<div class="n">119 / 142</div>
+<div class="n">121 / 154</div>
 </section>
-<section id="s120">
+<section id="s122">
 <h2>最後は、CPU エミュレータ自身</h2>
 
 <ul>
@@ -1205,9 +1222,9 @@ p "one" ++ p "two" ++ p "three"
 <li>1 バイトは 1 バイトに: 386 MB</li>
 <li>だからゲストに 1 GB を渡せるようになり、メモリ不足だったサンプルが一致した</li>
 </ul>
-<div class="n">120 / 142</div>
+<div class="n">122 / 154</div>
 </section>
-<section id="s121">
+<section id="s123">
 <h2>ボトルネックは、毎回、別の層にいた</h2>
 
 <ul>
@@ -1216,13 +1233,13 @@ p "one" ++ p "two" ++ p "three"
 <li>全部自分のコードだと、次のボトルネックも自分のコード</li>
 </ul>
 <p>測らずに直すと、毎回違う層を直していたはず</p>
-<div class="n">121 / 142</div>
+<div class="n">123 / 154</div>
 </section>
-<section id="s122">
+<section id="s124">
 <h1>第 7 章　1 つ直すと、次ができるようになる</h1>
-<div class="n">122 / 142</div>
+<div class="n">124 / 154</div>
 </section>
-<section id="s123">
+<section id="s125">
 <h2>連鎖 1: 自作 CPU の上に、自作 OS（8 月 11 日、1 日）</h2>
 
 <ul>
@@ -1230,9 +1247,9 @@ p "one" ++ p "two" ++ p "three"
 <li>末尾呼び出しをループにしないと、止まらないプログラム（OS）が書けない</li>
 <li>まず末尾呼び出し、メモリの回収、メモリが尽きたら言うヒープ</li>
 </ul>
-<div class="n">123 / 142</div>
+<div class="n">125 / 154</div>
 </section>
-<section id="s124">
+<section id="s126">
 <h2>作っていたら、壊れていたものが出る</h2>
 
 <ul>
@@ -1240,9 +1257,9 @@ p "one" ++ p "two" ++ p "three"
 <li>メモリの配置を RAM の大きさから決めるようにした</li>
 <li>自作コンパイラが、自作 CPU の上で、また 1 バイトも違わない出力を出した</li>
 </ul>
-<div class="n">124 / 142</div>
+<div class="n">126 / 154</div>
 </section>
-<section id="s125">
+<section id="s127">
 <h2>1 つずつ積む</h2>
 
 <ol>
@@ -1254,16 +1271,16 @@ p "one" ++ p "two" ++ p "three"
 <li>シェル（普通のコードで書けた）</li>
 <li>ユーザプロセス（言語に足したのは 1 つだけ）</li>
 </ol>
-<div class="n">125 / 142</div>
+<div class="n">127 / 154</div>
 </section>
-<section id="s126">
+<section id="s128">
 <h2>そして、その日の最後に</h2>
 <p>自作コンパイラが、自作 OS の上の普通のユーザプロセスとして動いた</p>
 <h1>タイマーに 3,727 回割り込まれながら</h1>
 <p>本来のコンパイラと 1 バイトも違わない出力を出した。新しく要ったものは無かった</p>
-<div class="n">126 / 142</div>
+<div class="n">128 / 154</div>
 </section>
-<section id="s127">
+<section id="s129">
 <h2>連鎖 2: Fiber が、本家のテストを動かした</h2>
 
 <ul>
@@ -1272,9 +1289,9 @@ p "one" ++ p "two" ++ p "three"
 <li>自作言語に、同じスレッドの中で切り替わるコルーチンを足した</li>
 <li>止まったスタックが指している区画は回収しない、という規則も</li>
 </ul>
-<div class="n">127 / 142</div>
+<div class="n">129 / 154</div>
 </section>
-<section id="s128">
+<section id="s130">
 <h2>Fiber のための道具が、回収を救った</h2>
 
 <ul>
@@ -1283,9 +1300,9 @@ p "one" ++ p "two" ++ p "three"
 <li>その道具で、回収を別のコルーチンで走らせた（第 6 章）</li>
 <li>本家のテストのファイルが、殺されずに最後まで走るようになった</li>
 </ul>
-<div class="n">128 / 142</div>
+<div class="n">130 / 154</div>
 </section>
-<section id="s129">
+<section id="s131">
 <h2>一致が、段で増える</h2>
 <table>
 <thead><tr><th>いつ</th><th>何をしたか</th><th>一致</th></tr></thead>
@@ -1296,9 +1313,9 @@ p "one" ++ p "two" ++ p "three"
 <tr><td>10 / 14</td><td>5,898</td></tr>
 <tr><td>10 / 18</td><td>6,304</td></tr>
 </tbody></table>
-<div class="n">129 / 142</div>
+<div class="n">131 / 154</div>
 </section>
-<section id="s130">
+<section id="s132">
 <h2>連鎖 3: 自作 CPU の上で、Ruby が 1 本ずつ動き出す</h2>
 
 <ul>
@@ -1307,9 +1324,9 @@ p "one" ++ p "two" ++ p "three"
 <li>辞書の使い回しの不具合を直した: 137</li>
 <li>浮動小数点のライブラリ: 142 / 162</li>
 </ul>
-<div class="n">130 / 142</div>
+<div class="n">132 / 154</div>
 </section>
-<section id="s131">
+<section id="s133">
 <h2>ホストの機能を、1 つずつ渡していく</h2>
 <table>
 <thead><tr><th>自作 CPU に足したもの</th><th>一致</th></tr></thead>
@@ -1322,9 +1339,9 @@ p "one" ++ p "two" ++ p "three"
 <tr><td>1 GB の RAM（と本家 ruby 4.0.6 への切り替え）</td><td>284 / 290</td></tr>
 <tr><td>296 / 302</td></tr>
 </tbody></table>
-<div class="n">131 / 142</div>
+<div class="n">133 / 154</div>
 </section>
-<section id="s132">
+<section id="s134">
 <h2>残りの内訳（285 / 291 の時点）</h2>
 
 <ul>
@@ -1333,9 +1350,9 @@ p "one" ++ p "two" ++ p "three"
 <li>2 本: 時間切れ。RAM と時間を足せば一致する</li>
 <li>自作言語の側の残りは、無い</li>
 </ul>
-<div class="n">132 / 142</div>
+<div class="n">134 / 154</div>
 </section>
-<section id="s133">
+<section id="s135">
 <h2>直すと、次ができる。できると、次の穴が見える</h2>
 
 <ul>
@@ -1343,13 +1360,85 @@ p "one" ++ p "two" ++ p "three"
 <li>Fiber を作ると、回収の道具ができ、本家のテストが走り、次の 2 乗が見えた</li>
 <li>CPU に機能を渡すと、Ruby のサンプルが動き、次に足りないものが名指しされた</li>
 </ul>
-<div class="n">133 / 142</div>
+<div class="n">135 / 154</div>
 </section>
-<section id="s134">
-<h1>第 8 章　この発表自身</h1>
-<div class="n">134 / 142</div>
+<section id="s136">
+<h1>第 8 章　パッチワーク: Ruby の中の Perl</h1>
+<div class="n">136 / 154</div>
 </section>
-<section id="s135">
+<section id="s137">
+<h2>Ruby も、パッチワーク</h2>
+<blockquote>Its creator, Yukihiro "Matz" Matsumoto, blended parts of his favorite languages (Perl, Smalltalk, Eiffel, Ada, and Lisp) to form a new language</blockquote>
+<p>ruby-lang.org「About Ruby」</p>
+<div class="n">137 / 154</div>
+</section>
+<section id="s138">
+<h2>Ruby を自作すると</h2>
+<p>Perl から来た布地を、1 枚ずつ自分で縫い直すことになる</p>
+<div class="n">138 / 154</div>
+</section>
+<section id="s139">
+<h2>事件簿: $~ は、マッチしたフレームのもの</h2>
+
+<ul>
+<li>最初、$~（最後のマッチ）は、1 つのグローバル変数だった</li>
+<li>メソッドの中のマッチが呼び出し元に見え、呼び出し元のマッチがメソッドに見えた</li>
+<li>呼び出しのたびに退避して、戻す</li>
+<li>ただし、ブロックはフレームではない。それが Ruby の規則</li>
+</ul>
+<div class="n">139 / 154</div>
+</section>
+<section id="s140">
+<h2>10 個を退避すると、42% 遅い</h2>
+
+<ul>
+<li>$~ と $1〜$9 の 10 個を呼び出しのたびに退避したら、呼び出しの多いコードで 42% 遅くなった</li>
+<li>$1〜$9 は置き場を持つのをやめ、読まれたときに $~ から取り出すことにした</li>
+<li>退避は 1 回で済み、fib(24) は元の速さに戻った</li>
+</ul>
+<div class="n">140 / 154</div>
+</section>
+<section id="s141">
+<h2>事件簿: 2 行目から 3 行目</h2>
+<pre><code>
+ruby -ne 'print if 2..3'
+</code></pre>
+
+<ul>
+<li>awk から来た書き方。2 行目から 3 行目までを出力する（flip-flop）</li>
+<li>最初は 2 と 3 がただの「真」で、全部の行が出力された</li>
+<li>整数の端は $.（今の行番号）と、正規表現の端は $_（今の行）と比べる</li>
+<li>本家の -e の仕様テストが、全部一致するようになった</li>
+</ul>
+<div class="n">141 / 154</div>
+</section>
+<section id="s142">
+<h2>小さな布地たち</h2>
+
+<ul>
+<li>if /re/ は、何も書かなくても $_ と照合する</li>
+<li>$_ はスレッドごと。$-a、$-l、$-p は読み取り専用</li>
+<li>$; を使うと、非推奨の警告が出る</li>
+<li>BEGIN は最初に、END は終了時に走る</li>
+<li>__END__ は、ヒアドキュメントの中ではプログラムを終わらせない</li>
+<li><code>$&lt;</code> は ARGF、<code>$&gt;</code> は <code>$stdout</code>、<code>$*</code> は ARGV</li>
+</ul>
+<div class="n">142 / 154</div>
+</section>
+<section id="s143">
+<h2>継ぎ目を見つけたのは、本家のテスト</h2>
+
+<ul>
+<li>どの布地も、本家の ruby と ruby/spec が「違う」と言ってくれた</li>
+<li>自分で書いた塔の継ぎ目を、他人が書いた判定が見つけた</li>
+</ul>
+<div class="n">143 / 154</div>
+</section>
+<section id="s144">
+<h1>第 9 章　この発表自身</h1>
+<div class="n">144 / 154</div>
+</section>
+<section id="s145">
 <h2>9 月、この発表の証拠を測り直した</h2>
 
 <ul>
@@ -1357,9 +1446,9 @@ p "one" ++ p "two" ++ p "three"
 <li>境界のテストに挙げた 3 つのうち 1 つは、どの CI にも居らず、測ったら赤だった</li>
 <li>どちらも、自分に甘い方向に外れていた</li>
 </ul>
-<div class="n">135 / 142</div>
+<div class="n">145 / 154</div>
 </section>
-<section id="s136">
+<section id="s146">
 <h2>そして、その訂正も</h2>
 
 <ul>
@@ -1368,18 +1457,29 @@ p "one" ++ p "two" ++ p "three"
 <li>162 本という数が、別の比較に 2 つあった</li>
 </ul>
 <p>記憶ではなく、ログが判定した</p>
-<div class="n">136 / 142</div>
+<div class="n">146 / 154</div>
 </section>
-<section id="s137">
-<h1>第 9 章　持ち帰ってほしいこと</h1>
-<div class="n">137 / 142</div>
+<section id="s147">
+<h1>第 10 章　持ち帰ってほしいこと</h1>
+<div class="n">147 / 154</div>
 </section>
-<section id="s138">
+<section id="s148">
+<h2>自分以外が判定する形には、系譜がある</h2>
+
+<ul>
+<li>1988 年、Perl 1.0 の t/TEST。Larry Wall が ok 1 / not ok 1 を数え始めた。TAP の始まり</li>
+<li>Raku は、仕様そのものをテスト集（roast）として定義した</li>
+<li>2006 年、Rubinius のために、Ruby の実行できる仕様が書かれ始めた。今の ruby/spec</li>
+</ul>
+<p>全部自分のコードの塔で、最後に頼ったのは、他人が書いた判定だった</p>
+<div class="n">148 / 154</div>
+</section>
+<section id="s149">
 <h2>自分が正しいと思っていることを</h2>
 <h2>自分以外が判定できる形に置き換える</h2>
-<div class="n">138 / 142</div>
+<div class="n">149 / 154</div>
 </section>
-<section id="s139">
+<section id="s150">
 <h2>3 つのやること</h2>
 <table>
 <thead><tr><th>やること</th><th>なぜ効くか</th></tr></thead>
@@ -1387,14 +1487,14 @@ p "one" ++ p "two" ++ p "three"
 <tr><td>黙っている検査を信じすぎない</td><td>見えない場所がある</td></tr>
 <tr><td>観察が食い違ったら、成果物を読む</td><td>成果物は構造を述べている</td></tr>
 </tbody></table>
-<div class="n">139 / 142</div>
+<div class="n">150 / 154</div>
 </section>
-<section id="s140">
+<section id="s151">
 <h2>当てるためではなく、外すために効く</h2>
 <p>いちばん効いたのは、検査が自分の仮説を否定したとき</p>
-<div class="n">140 / 142</div>
+<div class="n">151 / 154</div>
 </section>
-<section id="s141">
+<section id="s152">
 <h2>自分が書いていない層でも</h2>
 
 <ul>
@@ -1402,9 +1502,19 @@ p "one" ++ p "two" ++ p "three"
 <li>フレームワークでも、データベースでも、クラウドでも、答え合わせの相手でも</li>
 <li>仮定が外れたときにやることは、変わらない</li>
 </ul>
-<div class="n">141 / 142</div>
+<div class="n">152 / 154</div>
 </section>
-<section id="s142">
+<section id="s153">
+<h2>継ぎ当ては、引きはがれる</h2>
+
+<ul>
+<li>古い布に当てた新しい布は、縮んで引きはがれる。Larry Wall が引いた言葉</li>
+<li>20 バイト目が 20 個目になった 1 行も、直した圧縮器が届かなかった固定も、そうだった</li>
+<li>だから縫い目は、自分以外に確かめてもらう</li>
+</ul>
+<div class="n">153 / 154</div>
+</section>
+<section id="s154">
 <h2>ありがとうございました</h2>
 
 <ul>
@@ -1413,7 +1523,7 @@ p "one" ++ p "two" ++ p "three"
 <li>Ruby 処理系: https://github.com/284km/mere-ruby</li>
 <li>この資料: https://284km.github.io/decks/</li>
 </ul>
-<div class="n">142 / 142</div>
+<div class="n">154 / 154</div>
 </section>
 </body>
 </html>
