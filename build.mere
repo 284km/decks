@@ -61,7 +61,7 @@ let index_html = fn (rows: (str * str * int) list) ->
     ++ "</style>\n</head>\n<body>\n<h1>decks</h1>\n"
     ++ "<p class=\"sub\">Talks, built with <a href=\"https://github.com/284km/mslide\">mslide</a>.</p>\n<ul>\n") in
   let _ = list_iter rows (fn (r: (str * str * int)) ->
-    let (name, title, n) = r in
+    let (name, title, _n) = r in
     // A directory named `YYYY-MM-DD-slug` shows its date; anything else shows
     // its name, because inventing one would be worse than showing what is there.
     let date = if str_len name >= 10 then substring name 0 10 else name in
