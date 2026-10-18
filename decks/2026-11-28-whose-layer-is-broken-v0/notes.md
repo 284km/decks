@@ -99,6 +99,10 @@ first draft's `notes.md`.
 | 第 8 章 $~ はマッチしたフレームのもの / 10 個を退避すると 42% | mere-ruby 8fff991 |
 | 第 8 章 2 行目から 3 行目（flip-flop） | mere-ruby 9eff323 (command_line/dash_e_spec 5/4 -> 9/0) |
 | 第 8 章 小さな布地たち | mere-ruby 9694402 (`if /re/`), 8644051 (`$_` per thread, `$-a`/`$-l`/`$-p`), 77d6010 (`$;`), 3568500 (BEGIN/END), 78ae7be (`__END__`), 9fb3f78 (`$<` `$>` `$*`) |
+| 第 8 章 Ruby のために、Mere に入ったもの | merelang/mere 3d35e5a7 (v0.1.543, coroutines; Fiber is why, in the author's notes), 033c0399 (v0.1.391, "Ruby's 0.1 parses, adds and prints on the CPU"); `docs/stdlib-reference.md`: `tcp_listen_at` ("ruby's `TCPServer.new`"), `proc_sig_noop` ("what ruby does to `SIGPIPE`"), `proc_sig_ignore` ("ruby's `trap(sig, "IGNORE")`") |
+| 第 8 章 答え合わせの相手にも、Ruby | merelang/mere `contrib/unicode/README.md` (Reline, 17,793 of 18,226) |
+| 第 8 章 審判を縫い合わせていたのは、Perl / シェルを 1 段挟むと | mere-ruby `mspec/run_spec.sh` 190-200, 232, 240 (both sides under `perl -e "$sb_runner"`; core/env 1764 -> 1758); `bootstraptest/run.sh` 17-18; 20 scripts in merelang/mere and 17 files in mere-ruby call perl (counted 2026-10-18) |
+| 第 8 章 止まったものに、名前を付けたのも | merelang/mere `docs/changelog.md`: `parity.sh` through a perl `alarm` wrapper, `HUNG`; procsig_check "put the default back with perl first" |
 
 ## Not confirmed, so not on a slide
 
