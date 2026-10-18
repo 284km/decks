@@ -5,7 +5,7 @@ Not part of the deck: `build.mere` reads `deck.md` only.
 ## What v0 is
 
 Every episode from the tower that is worth telling, with no regard for length:
-108 slides. The talk given on the day is made from this by subtraction. `v2/` is
+142 slides. The talk given on the day is made from this by subtraction. `v2/` is
 one such subtraction (36 slides, 20 minutes), the first draft (`../2026-11-28-
 whose-layer-is-broken/`) is the talk as it could be written at the proposal.
 
@@ -19,8 +19,10 @@ Chapters:
 | 3 | 2 つの誤りが重なると、正しい出力になる | 14 cases where a check stayed green or silent for a reason of its own |
 | 4 | 答え合わせの相手にも、層がある | the reference ruby and the host's libm |
 | 5 | 遅さも、別の層にいる | 13 cases of CPU and memory, most with a first guess that was wrong |
-| 6 | この発表自身 | the talk's own evidence, and its own correction |
-| 7 | 持ち帰ってほしいこと | the three lines |
+| 6 | 開発を進めたいだけなのに | three chains of bottlenecks chased one after another just to keep developing: the ruby/spec sweep (90 → 11 min in one day, ending in the compiler), test files too big to measure, the Ruby corpus timing out on the self-made CPU |
+| 7 | 1 つ直すと、次ができるようになる | three chains of unlocks: the self-made OS in one day, Fiber leading to CRuby's own tests running, the Ruby corpus on the self-made CPU one host capability at a time |
+| 8 | この発表自身 | the talk's own evidence, and its own correction |
+| 9 | 持ち帰ってほしいこと | the three lines |
 
 ## Where each case can be checked
 
@@ -71,6 +73,12 @@ first draft's `notes.md`.
 | 測ったのは、古いファイルだった | author's notes (Wasm size) |
 | 1,000 個の関数が、1 つの塊 | merelang/mere 555906d6 (v0.1.581) |
 | この発表自身 | mere-ruby CI run for c2ea241; author's notes of 2026-09-24 |
+| 第 6 章 連鎖 1（仕様テストの 1 周） | mere-ruby 1b964bc (4,333 files, 2.71 s / 0.15 s / 1.89 s, fseventsd), 9ee85c6 (6 parallel, three records), 4dd8f78 (CPU-time bounds), 8570a07 (SIGINT, 1829.7 → 661.6 s), 372dbdc (two schedules rejected), 7767794 (awk, 19.5M scans, 29 → 4.95 s), all 2026-09-22; LOOP.md; merelang/mere 555906d6 (v0.1.581, 113 → 14 s) |
+| 第 6 章 連鎖 2（測れないテスト） | mere-ruby 5d91e15, 00f4af9, 3bf119e (the guard and clang), 4f91b30; merelang/mere bd60dfec (v0.1.589); author's notes for 3,471 / 1,609 / 3,527 and for the later quadratics |
+| 第 6 章 連鎖 3（自作 CPU の時間切れ） | merelang/mere 99f89488, 2ddbec18, 75d2c1fe (v0.1.616–618), v0.1.620, v0.1.632, v0.1.650 (memu one byte per byte); author's notes for 89 s, 4 s and 19 min |
+| 第 7 章 連鎖 1（自作 OS） | merelang/mere 727cbd9 (v0.1.185), 41ed9d4, 4687adf, d2343d4, 75c5be2, f90b6b5, 1076fb9, 1d96bb9, d2f577b ("preempted 3,727 times"), all 2026-08-11 |
+| 第 7 章 連鎖 2（Fiber から本家のテストへ） | merelang/mere 3d35e5a (v0.1.543), cd74e1e (v0.1.547), 514f8562 (v0.1.548), bd60dfec (v0.1.589), 930b4e3 (v0.1.625); mere-ruby 86ee8e1 (3,899), 40d8853 (4,232), a83677b (6,304); author's notes for the dates |
+| 第 7 章 連鎖 3（自作 CPU の上の Ruby） | merelang/mere ccd7a7c0 (v0.1.402), 369f2cf (v0.1.622), 385e436 (v0.1.623), v0.1.630–633, v0.1.645–647 (1fd1daf), 9b6a24e (v0.1.650); author's notes for each count |
 
 ## Not confirmed, so not on a slide
 
