@@ -22,8 +22,8 @@ hash = "md5:df5fa0e84d7d7446f0ab48bda07ad397"
 [[package]]
 name = "github.com/284km/mslide"
 git = "https://github.com/284km/mslide"
-rev = "dd037d41a91e351b28b625b35ab91fb143bd1e71"
-hash = "md5:08c52933d0b724960e82655f8e715c42"
+rev = "99ff6bb08e9e4f5e99133add4186a574f717b7a5"
+hash = "md5:cdbba284c63fbb9e124e9e02fdf54da7"
 
 [[package]]
 name = "mgz"
