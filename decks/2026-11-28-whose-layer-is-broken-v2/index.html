@@ -1,0 +1,377 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>自作言語で作った自作 CPU の上で自作 Ruby が動かない（v2）</title>
+<style>
+html, body { margin: 0; padding: 0; height: 100%; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body { font: 16px/1.6 system-ui, -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  color: #16181d; background: #fff; }
+section { box-sizing: border-box; position: relative; height: 100vh;
+  scroll-snap-align: start;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 6vh 8vw; border-bottom: 1px solid #e6e8ec; overflow: hidden; }
+.n { position: absolute; right: 3vw; bottom: 3vh; font-size: 1.6vh; color: #98a0ad; }
+h1 { font-size: 6.4vh; line-height: 1.15; margin: 0 0 3vh; letter-spacing: -0.01em; }
+h2 { font-size: 4.8vh; line-height: 1.2; margin: 0 0 2.4vh; }
+h3 { font-size: 3.4vh; margin: 0 0 2vh; }
+h4, h5, h6 { font-size: 2.6vh; margin: 0 0 1.6vh; }
+p, li { font-size: 2.8vh; margin: 0 0 1.6vh; }
+ul, ol { margin: 0 0 2vh; padding-left: 1.2em; }
+li { margin: 0 0 0.8vh; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92em; background: #f4f5f7; padding: 0.1em 0.3em; border-radius: 3px; }
+pre { margin: 0 0 2vh; padding: 2vh 2.4vh; background: #f4f5f7; border-radius: 6px;
+  overflow-x: auto; max-height: 62vh; }
+pre code { background: none; padding: 0; font-size: 2.1vh; line-height: 1.45; }
+blockquote { margin: 0 0 2vh; padding-left: 1em; border-left: 3px solid #c9ced8;
+  color: #4a5160; font-size: 2.6vh; }
+table { border-collapse: collapse; font-size: 2.2vh; margin: 0 0 2vh; }
+th, td { border: 1px solid #d7dbe2; padding: 0.5vh 1.2vh; text-align: left; }
+hr { border: 0; border-top: 2px solid #d7dbe2; width: 100%; margin: 2vh 0; }
+img { max-width: 100%; max-height: 55vh; }
+a { color: #1a53c0; }
+@media (max-width: 640px) { section { padding: 5vh 6vw; } }
+@media print {
+  html { scroll-snap-type: none; }
+  section { height: 100vh; page-break-after: always; border-bottom: 0; }
+  .n { display: none; }
+}
+</style>
+</head>
+<body>
+<section id="s1">
+<h1>自作言語で作った自作 CPU の上で自作 Ruby が動かない</h1>
+<p>全部自分のコードのとき、どこを疑うか</p>
+<p>284km ・ YAPC::Tokyo 2026</p>
+<div class="n">1 / 40</div>
+</section>
+<section id="s2">
+<h2>最初に、ひとつ選んでください</h2>
+<p>このあと出てくる 3 つの容疑者のうち、犯人はどれか</p>
+<p>最後に答え合わせをします</p>
+<div class="n">2 / 40</div>
+</section>
+<section id="s3">
+<h2>3 つの層、全部自分のコード</h2>
+
+<ol>
+<li>自作 Ruby 処理系（4 万行超）</li>
+<li>自作コンパイラが出した RISC-V の機械語</li>
+<li>自作 CPU エミュレータ</li>
+</ol>
+<p>Ruby 処理系も CPU エミュレータも、自作言語 Mere で書いた</p>
+<div class="n">3 / 40</div>
+</section>
+<section id="s4">
+<h2>CPU を 32 ビットから 64 ビットに広げた</h2>
+<h1>puts 1 + 1</h1>
+<p>が通らない</p>
+<div class="n">4 / 40</div>
+</section>
+<section id="s5">
+<h2>手を入れたのは、出す側と動かす側の両方</h2>
+
+<ul>
+<li>機械語を出すコンパイラと、それを動かす CPU エミュレータ</li>
+<li>書き換えは 149 箇所</li>
+<li>1 つのコミットではない</li>
+</ul>
+<div class="n">5 / 40</div>
+</section>
+<section id="s6">
+<h2>定石どおり、境界はテストしてあった</h2>
+<table>
+<thead><tr><th>層</th><th>何と比べたか</th><th>結果</th></tr></thead>
+<tbody><tr><td>1. Ruby 処理系</td><td>本家 ruby 3.2.2、162 本</td><td>バイト単位で一致</td></tr>
+<tr><td>2. 機械語</td><td>同じプログラムを C に変換して実行</td><td>64 / 32 ビットとも不一致 0</td></tr>
+<tr><td>3. CPU エミュレータ</td><td>同じ機械語を QEMU で実行</td><td>7 / 7 一致</td></tr>
+</tbody></table>
+<p>2026 年 9 月初め。全部、緑</p>
+<div class="n">6 / 40</div>
+</section>
+<section id="s7">
+<h2>境界のテストが言えること</h2>
+<h1>試したプログラムでは、一致する</h1>
+<p>「その層が正しい」とは、言っていない</p>
+<div class="n">7 / 40</div>
+</section>
+<section id="s8">
+<h2>容疑者は 3 人とも残る</h2>
+
+<ol>
+<li>自作 Ruby 処理系</li>
+<li>自作コンパイラが出した機械語</li>
+<li>自作 CPU エミュレータ</li>
+</ol>
+<p>どれだと思いますか</p>
+<div class="n">8 / 40</div>
+</section>
+<section id="s9">
+<h2>他人の層なら、材料が外から来る</h2>
+
+<ul>
+<li>issue、既知のバグ、changelog</li>
+<li>「みんな使っているから、たぶん正しい」</li>
+</ul>
+<p>全部自分のコードだと、それが 1 つも来ない</p>
+<div class="n">9 / 40</div>
+</section>
+<section id="s10">
+<h2>見当 1: 直前に手を入れた場所</h2>
+
+<ul>
+<li>64 ビット化で、関数ごとの「変数の置き場」の大きさを書き換えた</li>
+<li>壊れた値の置き場所は、関数が確保した範囲の外だった</li>
+<li>→ 置き場の数を数え間違えて、隣を踏んでいる</li>
+</ul>
+<div class="n">10 / 40</div>
+</section>
+<section id="s11">
+<h2>見当 2: 前に一度壊れた仕組み</h2>
+
+<ul>
+<li>関数を呼ぶ前に値を退避し、戻ったら書き戻す</li>
+<li>この作業の途中で、一度ここが壊れていた</li>
+<li>呼び出しの前後で、値が変わって見えた</li>
+<li>→ 呼ばれた側が、書き戻し損ねている</li>
+</ul>
+<div class="n">11 / 40</div>
+</section>
+<section id="s12">
+<h2>どちらも、証拠つき</h2>
+<h1>そして 2 回とも外れた</h1>
+<div class="n">12 / 40</div>
+</section>
+<section id="s13">
+<h2>推測を、検査に変える</h2>
+
+<ul>
+<li>コンパイラは関数ごとに「変数を何個ぶん置けるか」を先に決める</li>
+<li>確保した数と、実際に使った数を、コンパイラ自身に比べさせる</li>
+<li>合わなければ、コンパイルを止める</li>
+</ul>
+<div class="n">13 / 40</div>
+</section>
+<section id="s14">
+<h2>機械が言った</h2>
+<h1>reserved 2, used 17</h1>
+<p>確保 2 個、使用 17 個。疑いは当たっていた</p>
+<div class="n">14 / 40</div>
+</section>
+<section id="s15">
+<h2>直した</h2>
+<p>溢れは、どのプログラムでもゼロになった</p>
+<h1>それでも puts 1 + 1 は通らない</h1>
+<div class="n">15 / 40</div>
+</section>
+<section id="s16">
+<h2>実在の欠陥だった。でも、原因ではなかった</h2>
+<p>推測のままなら「直し方が悪かったのかも」と迷い続けたはず</p>
+<p>検査にしてあったから、当たりと原因を切り離せた</p>
+<div class="n">16 / 40</div>
+</section>
+<section id="s17">
+<h2>見当 2 も、検査に</h2>
+
+<ul>
+<li>CPU エミュレータに、関数呼び出しの約束を見張らせる</li>
+<li>呼ぶ前の値を覚えておき、戻ったときに照合する</li>
+</ul>
+<h1>一度も鳴らない</h1>
+<div class="n">17 / 40</div>
+</section>
+<section id="s18">
+<h2>検査は、外れも確定させる</h2>
+<p>外れた分岐が閉じる。だから次に進める</p>
+<div class="n">18 / 40</div>
+</section>
+<section id="s19">
+<h2>観察が、食い違い始めた</h2>
+
+<ul>
+<li>実行中の値を出力するコードを足すほど、結果が互いに矛盾した</li>
+<li>ある監視は「書き換えなし」、別の監視は「書き換えあり」</li>
+<li>推理の結論:「壊れた値は、メモリのどこかにある」</li>
+</ul>
+<div class="n">19 / 40</div>
+</section>
+<section id="s20">
+<h2>推理をやめて、出来上がった機械語を読む</h2>
+<p>逆アセンブル = 機械語を、人が読める命令の列に戻すこと</p>
+<p>壊れていた値を読みにいく、最初の命令は——</p>
+<div class="n">20 / 40</div>
+</section>
+<section id="s21">
+<h1>mv a0, s10</h1>
+<p>メモリからではなく、CPU 自身の置き場（レジスタ s10）から取っている</p>
+<p>「メモリのどこか」は、丸ごと誤りだった</p>
+<div class="n">21 / 40</div>
+</section>
+<section id="s22">
+<h2>s10 に書く命令は、その関数に 4 つだけ</h2>
+<p>うち 1 つが、例外から戻るときの書き戻しだった</p>
+<div class="n">22 / 40</div>
+</section>
+<section id="s23">
+<h2>例外の仕組み</h2>
+
+<ul>
+<li>失敗するかもしれない処理の前に、今の値を退避する</li>
+<li>失敗したら、退避した値を書き戻す</li>
+<li>退避には置き場所が要るので、メモリを一区画確保する</li>
+</ul>
+<p>よくある作り</p>
+<div class="n">23 / 40</div>
+</section>
+<section id="s24">
+<h2>書いていた先は、区画の外</h2>
+<table>
+<thead><tr><th>意図</th><th>実際</th></tr></thead>
+<tbody><tr><td>確保した区画</td><td>15 個ぶん（0〜14）</td><td>15 個ぶん（0〜14）</td></tr>
+<tr><td>値の退避先</td><td>5〜14</td><td>20〜29</td></tr>
+</tbody></table>
+<p>区画の外は、まだ誰にも渡していない空き地</p>
+<div class="n">24 / 40</div>
+</section>
+<section id="s25">
+<h2>空き地は、後から払い出される</h2>
+
+<ol>
+<li>区画を確保する</li>
+<li>値を、区画の外（空き地）に退避する</li>
+<li>処理の途中でメモリが要求され、その空き地が払い出される</li>
+<li>退避した値の上に、別のデータが書かれる</li>
+<li>失敗して書き戻すと、その別のデータが戻ってくる</li>
+</ol>
+<div class="n">25 / 40</div>
+</section>
+<section id="s26">
+<h2>壊れていたのは 1 行</h2>
+<h3>前: 20 + i × 4</h3>
+<p>先頭から 20 バイト目。区画の中で、正しかった</p>
+<h3>後: (20 + i) × wsz</h3>
+<p>先頭から 20 個目。wsz は 1 個のバイト数</p>
+<p>32 / 64 ビット両対応のための、機械的な置き換え</p>
+<div class="n">26 / 40</div>
+</section>
+<section id="s27">
+<h2>答え合わせ</h2>
+<h1>2. 自作コンパイラが出した機械語</h1>
+<p>最初の見当「直前に手を入れた場所」は、方向としては合っていた。同じ作業の、別の 1 行だった</p>
+<div class="n">27 / 40</div>
+</section>
+<section id="s28">
+<h2>では、なぜ緑だったのか</h2>
+<div class="n">28 / 40</div>
+</section>
+<section id="s29">
+<h2>テストは、あった</h2>
+
+<ul>
+<li>「例外から戻ると値が戻る」を確かめるテストが、ずっとあった</li>
+<li>退避する値は 8 個。入れ子も、失敗も成功も試していた</li>
+<li>でも、失敗する処理の中でメモリを確保していなかった</li>
+</ul>
+<p>確保 0 回なら通る。1 回で壊れる</p>
+<div class="n">29 / 40</div>
+</section>
+<section id="s30">
+<h2>間違った場所から書き戻すのと</h2>
+<h2>まだ誰も書いていない場所から書き戻すのは</h2>
+<h1>出力が同じ</h1>
+<div class="n">30 / 40</div>
+</section>
+<section id="s31">
+<h2>32 ビットも、同じ変更からずっと壊れていた</h2>
+
+<ul>
+<li>症状が出なかっただけ</li>
+<li>64 ビットに移った時点で、32 ビットで回すのをやめていた</li>
+<li>壊れたと気づく手段を、自分で捨てていた</li>
+</ul>
+<div class="n">31 / 40</div>
+</section>
+<section id="s32">
+<h2>同じ形に、その後も出会った</h2>
+<div class="n">32 / 40</div>
+</section>
+<section id="s33">
+<h2>10 月: 印字は、ずっと正しかった</h2>
+
+<ul>
+<li>コンパイラの印字は、出力先の番号を入れ忘れていた</li>
+<li>CPU エミュレータは、その番号を見ずに全部画面に出していた</li>
+<li>出力は正しい。テストは緑</li>
+</ul>
+<p>エミュレータを本物に近づけた瞬間、印字が壊れた</p>
+<div class="n">33 / 40</div>
+</section>
+<section id="s34">
+<h2>コードにはコメントまであった</h2>
+<h3>「エミュレータは番号を無視する。QEMU は無視しない」</h3>
+<p>そのコメントの所は直してあった。同じ形の印字と失敗の経路、ほかの 5 箇所は直っていなかった</p>
+<div class="n">34 / 40</div>
+</section>
+<section id="s35">
+<h2>2 つの誤りが重なると、正しい出力になる</h2>
+
+<ul>
+<li>書き戻し先がずれている × まだ誰も上書きしていない</li>
+<li>番号を入れ忘れた × 番号を見ない</li>
+</ul>
+<p>比較が見ているのは、出力だけ</p>
+<div class="n">35 / 40</div>
+</section>
+<section id="s36">
+<h2>そして、この発表の準備中にも</h2>
+
+<ul>
+<li>9 月、証拠を測り直して「Ruby 層の 162 本一致は誤り」と訂正した</li>
+<li>今月、CI のログを読み直したら、誤りだったのは訂正の方だった</li>
+<li>162 本という数が、別の比較に 2 つあった</li>
+</ul>
+<p>記憶ではなく、ログが判定した</p>
+<div class="n">36 / 40</div>
+</section>
+<section id="s37">
+<h2>持ち帰ってほしいこと</h2>
+<p>自分が正しいと思っていることを、自分以外が判定できる形に置き換える</p>
+<table>
+<thead><tr><th>やること</th><th>なぜ効くか</th></tr></thead>
+<tbody><tr><td>疑いは検査にする</td><td>外れも確定する</td></tr>
+<tr><td>黙っている検査を信じすぎない</td><td>見えない場所がある</td></tr>
+<tr><td>観察が食い違ったら、成果物を読む</td><td>成果物は構造を述べている</td></tr>
+</tbody></table>
+<div class="n">37 / 40</div>
+</section>
+<section id="s38">
+<h2>当てるためではなく、外すために効く</h2>
+<p>いちばん効いたのは、検査が自分の仮説を否定した 2 回だった</p>
+<div class="n">38 / 40</div>
+</section>
+<section id="s39">
+<h2>自分が書いていない層でも</h2>
+
+<ul>
+<li>「下の層は正しい」は、いつでも仮定</li>
+<li>フレームワークでも、データベースでも、クラウドでも</li>
+<li>仮定が外れたときにやることは、変わらない</li>
+</ul>
+<div class="n">39 / 40</div>
+</section>
+<section id="s40">
+<h2>ありがとうございました</h2>
+
+<ul>
+<li>Mere: https://merelang.org/</li>
+<li>CPU エミュレータ: https://github.com/284km/memu</li>
+<li>Ruby 処理系: https://github.com/284km/mere-ruby</li>
+<li>この資料: https://284km.github.io/decks/</li>
+</ul>
+<div class="n">40 / 40</div>
+</section>
+</body>
+</html>
