@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Grain of an Effect: Shared Writes and the Logger Problem</title>
+<style>
+html, body { margin: 0; padding: 0; height: 100%; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body { font: 16px/1.6 system-ui, -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  color: #16181d; background: #fff; }
+section { box-sizing: border-box; position: relative; height: 100vh;
+  scroll-snap-align: start;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 6vh 8vw; border-bottom: 1px solid #e6e8ec; overflow: hidden; }
+.n { position: absolute; right: 3vw; bottom: 3vh; font-size: 1.6vh; color: #98a0ad; }
+h1 { font-size: 6.4vh; line-height: 1.15; margin: 0 0 3vh; letter-spacing: -0.01em; }
+h2 { font-size: 4.8vh; line-height: 1.2; margin: 0 0 2.4vh; }
+h3 { font-size: 3.4vh; margin: 0 0 2vh; }
+h4, h5, h6 { font-size: 2.6vh; margin: 0 0 1.6vh; }
+p, li { font-size: 2.8vh; margin: 0 0 1.6vh; }
+ul, ol { margin: 0 0 2vh; padding-left: 1.2em; }
+li { margin: 0 0 0.8vh; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92em; background: #f4f5f7; padding: 0.1em 0.3em; border-radius: 3px; }
+pre { margin: 0 0 2vh; padding: 2vh 2.4vh; background: #f4f5f7; border-radius: 6px;
+  overflow-x: auto; max-height: 62vh; }
+pre code { background: none; padding: 0; font-size: 2.1vh; line-height: 1.45; }
+blockquote { margin: 0 0 2vh; padding-left: 1em; border-left: 3px solid #c9ced8;
+  color: #4a5160; font-size: 2.6vh; }
+table { border-collapse: collapse; font-size: 2.2vh; margin: 0 0 2vh; }
+th, td { border: 1px solid #d7dbe2; padding: 0.5vh 1.2vh; text-align: left; }
+hr { border: 0; border-top: 2px solid #d7dbe2; width: 100%; margin: 2vh 0; }
+img { max-width: 100%; max-height: 55vh; }
+a { color: #1a53c0; }
+@media (max-width: 640px) { section { padding: 5vh 6vw; } }
+@media print {
+  html { scroll-snap-type: none; }
+  section { height: 100vh; page-break-after: always; border-bottom: 0; }
+  .n { display: none; }
+}
+</style>
+</head>
+<body>
+<section id="s1">
+<p>Two episodes established that a capability in a parameter list makes an effect visible, and that this survives higher-order functions. But visible at what resolution? Knowing a function was handed a <code>Database</code> tells you it can touch the database — not whether it only reads, or also writes; not whether it needs the database to itself, or can share it. Presence is a coarse grain. This episode is about giving effects a finer one, and about the single awkward case that decides how.</p>
+<div class="n">1 / 6</div>
+</section>
+<section id="s2">
+<h2>The Logger problem</h2>
+<p>Here is the case that a two-point system can't express:</p>
+<pre><code>
+fn read_users(db: &amp;borrowed Database) -&gt; Vec[User]        // read
+fn save_order(db: &amp;mut borrowed Database) -&gt; unit          // write, exclusive
+fn log_info(logger: &amp;borrowed Logger, msg: &amp;borrowed str)  // write — but shareable
+</code></pre>
+<p>The first two are comfortable. Reading users needs a shared, read-only handle; saving an order needs exclusive write access. Those map cleanly onto the two borrow forms most languages give you: <code>&amp;</code> for shared reads, <code>&amp;mut</code> for exclusive writes.</p>
+<p>The third breaks the mapping. A logger is <em>written to</em> — logging appends a line — so it isn't a read. But it does not want to be exclusive: the whole point of a logger is that many callers, even many threads, write to it at once, with the safety handled inside (a lock, a lock-free queue). Pass it as <code>&amp;borrowed</code> and the type quietly lies about the write. Pass it as <code>&amp;mut borrowed</code> and you've declared it exclusive, forbidding the concurrent logging that is its reason to exist. There is no correct choice, because the vocabulary has no word for what a logger is.</p>
+<div class="n">2 / 6</div>
+</section>
+<section id="s3">
+<h2>Two axes that Rust ties together</h2>
+<p>The reason there's no word is that <code>&amp;</code> and <code>&amp;mut</code> are each doing two jobs at once. <code>&amp;</code> means <em>shared</em> and <em>read-only</em>; <code>&amp;mut</code> means <em>exclusive</em> and <em>writable</em>. Two independent questions — may several borrowers hold this at once? and may a borrower mutate through it? — have been fused into a single either/or. That fusion is convenient and it covers most code, but it leaves one of the four combinations unnameable: shared <em>and</em> writable. Which is exactly a logger.</p>
+<p>Mere's response follows straight from a habit the series keeps showing: when one name is quietly carrying two meanings, split it. So the borrow annotation becomes a grid of two orthogonal axes — sharing (<code>shared</code> / <code>exclusive</code>) and operation (<code>read</code> / <code>write</code>) — and the four points each get a name:</p>
+<table>
+<thead><tr><th>annotation</th><th>sharing</th><th>writes</th><th>example</th></tr></thead>
+<tbody><tr><td><code>&amp;R T</code> (default)</td><td>shared</td><td>read only</td><td><code>Config</code>, <code>Users</code></td></tr>
+<tr><td><code>&amp;shared write R T</code></td><td>shared</td><td>yes</td><td><code>Logger</code>, <code>Cache</code>, <code>Metrics</code></td></tr>
+<tr><td><code>&amp;exclusive R T</code></td><td>exclusive</td><td>read only</td><td>(rare)</td></tr>
+<tr><td><code>&amp;mut R T</code></td><td>exclusive</td><td>yes</td><td><code>Database</code> transaction</td></tr>
+</tbody></table>
+<p>The corners <code>&amp;R</code> and <code>&amp;mut R</code> are precisely Rust's <code>&amp;</code> and <code>&amp;mut</code>, so common code looks unchanged. The point of the grid is the cell Rust can't spell: <code>&amp;shared write</code>, "many borrowers may hold this at once and each may call write operations, with the capability itself responsible for staying safe." The Logger problem isn't solved by a special case; it's solved by refusing to conflate two axes that were never actually the same, and letting the fourth combination exist because the other three do.</p>
+<div class="n">3 / 6</div>
+</section>
+<section id="s4">
+<h2>Why put it in the type at all</h2>
+<p>There were cheaper answers. The alternatives considered ranged from "keep a single <code>&amp;</code> and let each capability's API decide what's allowed" to attaching marker tags like <code>Logger&lt;Write, Shared&gt;</code> to the capability type. The single-borrow option is the simplest to build — but it pushes the concurrency question entirely onto the capability's implementation, where the type system can't see it: whether <code>cache.set</code> through a shared handle is safe becomes a promise the author makes, not a fact the compiler checks. For a language whose whole premise is maximizing what can be <em>machine-verified</em>, delegating concurrency safety to an unchecked convention is the wrong trade, so that option was rejected outright.</p>
+<p>The marker-tag approach can express everything the grid can and more — you could invent an <code>Io</code> tag, a <code>Gpu</code> tag, anything — but that generality is its problem. It turns capability declarations into a small tag language every type author has to play correctly, heavier than the four plain combinations actually need. Mere took the grid as the primary mechanism, kept the operation-list style (Rust's <code>&amp;self</code> / <code>&amp;mut self</code> methods) as guidance for how a capability's API should read, and left the tags on the shelf as room to grow <em>if</em> a case ever needs a distinction the four cells can't draw. Four combinations is a small, closed complexity; a tag system is an open-ended one. Prefer the small closed thing until something forces otherwise.</p>
+<div class="n">4 / 6</div>
+</section>
+<section id="s5">
+<h2>What it costs at runtime: nothing</h2>
+<p>The narrowing was done on paper, then dropped into the compiler as a few implementation slices — and the most telling result is what <em>didn't</em> have to change. The four modes are contextual keywords after <code>&amp;</code>; they ride along in the type as a <code>borrow_mode</code>, and unification treats them as distinct with no subtyping, so handing a <code>&amp;R Database</code> where a <code>&amp;mut R Database</code> is wanted is a type error caught at the call site. But the runtime and all three backends (C, LLVM, Wasm) simply <em>ignore</em> the mode: a borrow is a pointer regardless of its mode, so the generated code is identical and feature parity across backends held without touching code generation at all.</p>
+<p>That is the same shape as view types being <code>Trivial</code>: a guarantee that lives entirely in the type system and evaporates at runtime. The distinction between <code>&amp;shared write</code> and <code>&amp;mut</code> costs the programmer some honesty in the signature and costs the running program nothing. A worked example confirmed it end to end — three capabilities borrowed in three different modes within one region, each usable through its borrow, none interfering with the others, which is the Logger problem resolved not in prose but in a program that compiles and runs.</p>
+<div class="n">5 / 6</div>
+</section>
+<section id="s6">
+<h2>What's deferred to the concurrency chapters</h2>
+<p>Naming <code>&amp;shared write</code> raises a question it doesn't yet answer: what does a type have to <em>prove</em> to be borrowed that way? A shared-writable capability must be internally safe against concurrent access, and there should be a way for the type to declare that it is — a constraint in the spirit of <code>Send</code>/<code>Sync</code>. And the exact code generation for concurrent backends — where the locks actually go, how write ordering is guaranteed — is left until there is a concurrent backend to generate for. Both are deferred on purpose, to the part of the story where concurrency becomes real rather than anticipated.</p>
+<p>With this, the effect model can say not just <em>what</em> a function may touch but <em>how</em> — read or write, alone or shared. What remains is the ergonomic problem the first effects episode flagged: a realistic function needs several capabilities plus a region, and its signature grows long. The open question was how to <em>group</em> them without making effects travel invisibly again. Next: <strong>bundling capabilities, and their lifecycle</strong> — signature spreads, <code>using</code> clauses, and the <code>with</code> construct tying it back to the memory model.</p>
+<div class="n">6 / 6</div>
+</section>
+</body>
+</html>

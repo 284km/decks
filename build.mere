@@ -30,15 +30,41 @@ let deck_dirs = fn () ->
     file_exists (decks_dir ++ "/" ++ n ++ "/deck.md")) in
   list_sort_by (fn (a: str) -> fn (b: str) -> a <= b) named;
 
-let build_one = fn (f: font) -> fn (name: str) ->
+// The face a talk is set in, by the language its directory name ends in.
+//
+// No single static font covers Latin, Japanese and Korean: the bundled M PLUS 1p
+// has none of the 11,172 Hangul syllables and says nothing about it, and the one
+// Noto that does cover all three is a variable font whose default instance is
+// Thin. So a deck names its face, by the same suffix the source articles use.
+let font_for = fn (name: str) ->
+  let n = str_len name in
+  let ends = fn (suffix: str) ->
+    let m = str_len suffix in
+    n >= m && substring name (n - m) n == suffix in
+  if ends "-ko" then "fonts/GothicA1-Regular.ttf" else Bundled.font ();
+
+// Where to cut slides, for a deck whose source is prose. A `deck.md` with its
+// own `---` needs nothing; an article has headings and no breaks, so the
+// directory says so with a marker file rather than the tool guessing.
+let split_level = fn (dir: str) ->
+  if file_exists (dir ++ "/split-at-h2") then 2 else 0;
+
+let build_one = fn (name: str) ->
   let dir = decks_dir ++ "/" ++ name in
-  let d = Deck.of_lines (read_lines (dir ++ "/deck.md")) in
+  let fp = font_for name in
+  let f = if str_len fp == 0 then
+            let _ = print ("build: " ++ Bundled.font_missing ()) in exit 1
+          else if file_exists fp == false then
+            let _ = print ("build: no font at " ++ fp) in exit 1
+          else Font.load fp in
+  let d = Deck.of_lines_split (split_level dir) (read_lines (dir ++ "/deck.md")) in
   let _ = write_file (dir ++ "/index.html") (DeckHtml.render d) in
   let fr = Layout.frame_of 1280 720 in
   let pngs = list_map d.slides (fn (s: slide) ->
     bytes_of_vec (Png.encode (Png.slide_canvas f fr s))) in
   let _ = write_bytes (dir ++ "/deck.pdf") (Pdf.of_pngs pngs) in
-  let _ = print ("  " ++ name ++ "  " ++ show (Deck.count d) ++ " slides -> index.html + deck.pdf") in
+  let _ = print ("  " ++ name ++ "  " ++ show (Deck.count d) ++ " slides, "
+                 ++ fp ++ " -> index.html + deck.pdf") in
   (name, d.title, Deck.count d);
 
 // The index. Deliberately plain: it is a list of talks, and a list of talks that
@@ -72,13 +98,8 @@ let index_html = fn (rows: (str * str * int) list) ->
   let _ = strbuf_push b "</ul>\n</body>\n</html>\n" in
   strbuf_to_str b;
 
-let fp = Bundled.font ();
-if str_len fp == 0 then
-  let _ = print ("build: " ++ Bundled.font_missing ()) in exit 1
-else
-  let f = Font.load fp in
-  let names = deck_dirs () in
-  let _ = if list_len names == 0 then print "build: no decks yet" else () in
-  let rows = list_map names (build_one f) in
-  let _ = write_file index_path (index_html rows) in
-  print ("built " ++ show (list_len rows) ++ " deck(s) + index.html")
+let names = deck_dirs ();
+let _ = if list_len names == 0 then print "build: no decks yet" else ();
+let rows = list_map names build_one;
+let _ = write_file index_path (index_html rows);
+print ("built " ++ show (list_len rows) ++ " deck(s) + index.html")

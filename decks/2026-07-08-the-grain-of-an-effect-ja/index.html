@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>エフェクトの粒度：shared write と Logger 問題</title>
+<style>
+html, body { margin: 0; padding: 0; height: 100%; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+body { font: 16px/1.6 system-ui, -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  color: #16181d; background: #fff; }
+section { box-sizing: border-box; position: relative; height: 100vh;
+  scroll-snap-align: start;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 6vh 8vw; border-bottom: 1px solid #e6e8ec; overflow: hidden; }
+.n { position: absolute; right: 3vw; bottom: 3vh; font-size: 1.6vh; color: #98a0ad; }
+h1 { font-size: 6.4vh; line-height: 1.15; margin: 0 0 3vh; letter-spacing: -0.01em; }
+h2 { font-size: 4.8vh; line-height: 1.2; margin: 0 0 2.4vh; }
+h3 { font-size: 3.4vh; margin: 0 0 2vh; }
+h4, h5, h6 { font-size: 2.6vh; margin: 0 0 1.6vh; }
+p, li { font-size: 2.8vh; margin: 0 0 1.6vh; }
+ul, ol { margin: 0 0 2vh; padding-left: 1.2em; }
+li { margin: 0 0 0.8vh; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.92em; background: #f4f5f7; padding: 0.1em 0.3em; border-radius: 3px; }
+pre { margin: 0 0 2vh; padding: 2vh 2.4vh; background: #f4f5f7; border-radius: 6px;
+  overflow-x: auto; max-height: 62vh; }
+pre code { background: none; padding: 0; font-size: 2.1vh; line-height: 1.45; }
+blockquote { margin: 0 0 2vh; padding-left: 1em; border-left: 3px solid #c9ced8;
+  color: #4a5160; font-size: 2.6vh; }
+table { border-collapse: collapse; font-size: 2.2vh; margin: 0 0 2vh; }
+th, td { border: 1px solid #d7dbe2; padding: 0.5vh 1.2vh; text-align: left; }
+hr { border: 0; border-top: 2px solid #d7dbe2; width: 100%; margin: 2vh 0; }
+img { max-width: 100%; max-height: 55vh; }
+a { color: #1a53c0; }
+@media (max-width: 640px) { section { padding: 5vh 6vw; } }
+@media print {
+  html { scroll-snap-type: none; }
+  section { height: 100vh; page-break-after: always; border-bottom: 0; }
+  .n { display: none; }
+}
+</style>
+</head>
+<body>
+<section id="s1">
+<p>二回にわたって確かめた —— パラメータリストのケイパビリティがエフェクトを可視にすること、 そしてそれが高階関数を生き延びること。だが、どの解像度で可視なのか？ ある関数が <code>Database</code> を手渡されたと知っても、それはデータベースに触れられることを告げるだけだ —— ただ読むのか書きもするのかも、データベースを独り占めしたいのか共有できるのかも告げない。 有無は粗い粒度だ。今回は、エフェクトにより細かい粒度を与える話であり、それをどう与えるかを 決める一つの厄介なケースの話だ。</p>
+<div class="n">1 / 6</div>
+</section>
+<section id="s2">
+<h2>Logger 問題</h2>
+<p>二点しかないシステムが表現できないケースがこれだ：</p>
+<pre><code>
+fn read_users(db: &amp;borrowed Database) -&gt; Vec[User]        // 読み
+fn save_order(db: &amp;mut borrowed Database) -&gt; unit          // 書き、排他
+fn log_info(logger: &amp;borrowed Logger, msg: &amp;borrowed str)  // 書き —— だが共有可能
+</code></pre>
+<p>最初の二つは居心地がよい。ユーザを読むには共有の読み取り専用ハンドルが要り、注文を保存する には排他的な書き込みアクセスが要る。それらは、たいていの言語がくれる二つの借用形に綺麗に 対応する：共有読みの <code>&amp;</code> と、排他書きの <code>&amp;mut</code> だ。</p>
+<p>三つ目が対応を壊す。logger は<em>書き込まれる</em> —— ログは行を追記する —— から、読みではない。 だが排他的でありたくもない：logger の要点はまさに、多くの呼び手が、多くのスレッドさえもが、 同時に書き込むことで、安全性は内部で（ロック、あるいはロックフリーのキュー）担われる。それを <code>&amp;borrowed</code> で渡せば、型は書き込みについてこっそり嘘をつく。<code>&amp;mut borrowed</code> で渡せば、それを 排他と宣言し、その存在理由である並行ログを禁じてしまう。正しい選択がない。語彙に、logger が 何であるかを言う言葉がないからだ。</p>
+<div class="n">2 / 6</div>
+</section>
+<section id="s3">
+<h2>Rust が結びつける二つの軸</h2>
+<p>言葉がない理由は、<code>&amp;</code> と <code>&amp;mut</code> がそれぞれ一度に二つの仕事をしているからだ。<code>&amp;</code> は<em>共有</em>かつ <em>読み取り専用</em>を意味し、<code>&amp;mut</code> は<em>排他</em>かつ<em>書き込み可</em>を意味する。二つの独立した問い —— これを複数の借用者が同時に持てるか？ そして借用者はそれを通して変更できるか？ —— が、一つの 二者択一に融合されている。その融合は便利で、大半のコードを覆うが、四つの組み合わせのうち一つを 名づけられないまま残す：共有<em>かつ</em>書き込み可。それがまさに logger だ。</p>
+<p>Mere の応答は、連載が何度も見せてきた習慣から直に従う：一つの名前がこっそり二つの意味を運んで いるなら、割る。だから借用注釈は二つの直交軸のグリッドになる —— 共有性（<code>shared</code> / <code>exclusive</code>） と操作（<code>read</code> / <code>write</code>）—— そして四点それぞれに名がつく：</p>
+<table>
+<thead><tr><th>注釈</th><th>共有性</th><th>書き</th><th>例</th></tr></thead>
+<tbody><tr><td><code>&amp;R T</code>（既定）</td><td>共有</td><td>読みのみ</td><td><code>Config</code>, <code>Users</code></td></tr>
+<tr><td><code>&amp;shared write R T</code></td><td>共有</td><td>可</td><td><code>Logger</code>, <code>Cache</code>, <code>Metrics</code></td></tr>
+<tr><td><code>&amp;exclusive R T</code></td><td>排他</td><td>読みのみ</td><td>（稀）</td></tr>
+<tr><td><code>&amp;mut R T</code></td><td>排他</td><td>可</td><td><code>Database</code> トランザクション</td></tr>
+</tbody></table>
+<p>隅の <code>&amp;R</code> と <code>&amp;mut R</code> はちょうど Rust の <code>&amp;</code> と <code>&amp;mut</code> だから、ありふれたコードは変わって 見えない。グリッドの要点は、Rust が綴れないセルだ：<code>&amp;shared write</code>、「多くの借用者が同時に 持てて、それぞれが write 操作を呼べる、安全であり続ける責任はケイパビリティ自身にある」。 Logger 問題は特別扱いで解かれるのではない。決して実は同じでなかった二つの軸を融合するのを 拒み、他の三つが存在するのだから四つ目の組み合わせも存在させる、それで解かれる。</p>
+<div class="n">3 / 6</div>
+</section>
+<section id="s4">
+<h2>そもそもなぜ型に載せるのか</h2>
+<p>より安い答えもあった。検討された代替は、「単一の <code>&amp;</code> を保ち、何が許されるかは各ケイパビリティ の API に決めさせる」から、<code>Logger&lt;Write, Shared&gt;</code> のようなマーカータグをケイパビリティ型に 付けるまでに及んだ。単一借用の選択肢は建てるのが最も簡単だ —— だがそれは、並行性の問いを丸ごと ケイパビリティの実装へ押しやり、そこは型システムに見えない：共有ハンドル越しの <code>cache.set</code> が 安全かどうかは、コンパイラが検査する事実ではなく、作者がする約束になる。検証<em>できる</em>ものの 最大化を前提の全てとする言語にとって、並行安全性を未検査の慣習に委ねるのは誤った取引だ。だから その選択肢は端的に棄却された。</p>
+<p>マーカータグの手法は、グリッドが表現できることの全てとそれ以上を表現できる —— <code>Io</code> タグも、 <code>Gpu</code> タグも、何でも発明できる —— が、その一般性こそが問題だ。それはケイパビリティ宣言を、 すべての型作者が正しくプレイせねばならない小さなタグ言語に変え、四つの素朴な組み合わせが実際に 必要とするより重い。Mere はグリッドを主軸に採り、操作リストの様式（Rust の <code>&amp;self</code> / <code>&amp;mut self</code> メソッド）をケイパビリティの API がどう読めるべきかの指針として保ち、そしてタグは、四つのセルが 引けない区別をいつか必要とする場合<em>に備えた</em>伸びしろとして棚に残した。四つの組み合わせは小さく 閉じた複雑度で、タグシステムは開かれた複雑度だ。何かが強いない限り、小さく閉じたものを選べ。</p>
+<div class="n">4 / 6</div>
+</section>
+<section id="s5">
+<h2>実行時コスト：ゼロ</h2>
+<p>絞り込みは紙上でなされ、それからいくつかの実装スライスとしてコンパイラに落とされた —— そして 最も物語るのは、何が変わら<em>なくて</em>済んだかだ。四つのモードは <code>&amp;</code> の後の文脈依存キーワードで、 型の中を <code>borrow_mode</code> として乗っていき、単一化はそれらを subtyping なしに区別する。だから <code>&amp;mut R Database</code> が欲しいところに <code>&amp;R Database</code> を渡すのは、呼び出し箇所で捕まる型エラーだ。 だが実行時と三つの backend（C・LLVM・Wasm）はモードをただ<em>無視する</em>：借用はモードによらず ポインタだから、生成されるコードは同一で、backend 間の feature parity はコード生成に一切 触れずに保たれた。</p>
+<p>これは view 型が <code>Trivial</code> であることと同じ形だ：完全に型システムの中に住み、実行時には 蒸発する保証。<code>&amp;shared write</code> と <code>&amp;mut</code> の区別は、プログラマにシグネチャでのいくらかの正直さを 要求し、走るプログラムには何も要求しない。動作する実例が端から端まで確かめた —— 一つの region の中で三つのモードで借用された三つのケイパビリティ、それぞれが借用越しに使え、どれも互いに 干渉しない。それは、散文でではなく、コンパイルして走るプログラムの中で解決された Logger 問題だ。</p>
+<div class="n">5 / 6</div>
+</section>
+<section id="s6">
+<h2>並行処理の章へ先送りしたもの</h2>
+<p><code>&amp;shared write</code> に名をつけることは、それがまだ答えない問いを立てる：そう借用されるために、 型は何を<em>証明</em>せねばならないのか？ 共有書き込み可能なケイパビリティは並行アクセスに対して内部 的に安全でなければならず、型がそうだと宣言できる道があるべきだ —— <code>Send</code>/<code>Sync</code> の精神の制約。 そして並行 backend への正確なコード生成 —— ロックが実際どこに入るか、書き込み順序がどう保証 されるか —— は、生成すべき並行 backend ができるまで残される。どちらも意図して先送りされる。 並行処理が、予期されるものではなく現実になる、物語のその Part へ。</p>
+<p>これでエフェクトモデルは、関数が<em>何に</em>触れてよいかだけでなく<em>どう</em> —— 読みか書きか、単独か 共有か —— を言えるようになった。残るのは、最初のエフェクト回が旗を立てた人間工学の問題だ： 現実的な関数はいくつものケイパビリティと region を要し、そのシグネチャは長くなる。開いた問いは、 エフェクトを再び不可視に移動させることなく、それらをどう<em>グループ化</em>するかだった。次回： <strong>ケイパビリティの束ねと、そのライフサイクル</strong> —— シグネチャの spread、<code>using</code> 句、そして メモリモデルへ結び戻す <code>with</code> 構文。</p>
+<div class="n">6 / 6</div>
+</section>
+</body>
+</html>
