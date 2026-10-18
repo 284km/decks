@@ -4,50 +4,50 @@
 name = "font"
 git = "https://github.com/merelang/mere"
 subdir = "contrib/font"
-rev = "557314f6fd8d87f16dfba136ad27175e8c7e2778"
+rev = "9d3966bd341eae2b0fd609e7ddcfb3136deb2e3f"
 hash = "md5:fe0e9cc9f559dbca39b9ccd7794ab450"
 
 [[package]]
 name = "github.com/284km/mere-markdown"
 git = "https://github.com/284km/mere-markdown"
-rev = "bbc514d9068e244e8e2dfc59cad8cccd1cfaca7c"
-hash = "md5:a6a6ddab27bed87ce911f573dea09c11"
+rev = "06288f9f641b83cab979f8864237378f1684c740"
+hash = "md5:29308337a0facb348af1128165f823e2"
 
 [[package]]
 name = "github.com/284km/mpng"
 git = "https://github.com/284km/mpng"
-rev = "3b964e279e78dd4919fdefc607090a0943b9273f"
-hash = "md5:6bcd8a4c6b2da3ada1aae2d7b285a61a"
+rev = "275c32af7dcd4c0f2345588ec33c91dbbe363e0f"
+hash = "md5:df5fa0e84d7d7446f0ab48bda07ad397"
 
 [[package]]
 name = "github.com/284km/mslide"
 git = "https://github.com/284km/mslide"
-rev = "d3f37e4b6398df1b10f69ab241e9ba5b033ef71c"
-hash = "md5:18878b505dc661ec1846a3f14b81fb7a"
+rev = "dd037d41a91e351b28b625b35ab91fb143bd1e71"
+hash = "md5:08c52933d0b724960e82655f8e715c42"
 
 [[package]]
 name = "mgz"
 git = "https://github.com/284km/mgz"
-rev = "57efe4ce14149e29ae5ab978d08195012a3e4eae"
-hash = "md5:9d89f29ecf0f340aa7b2d63790a5534f"
+rev = "a3b818b3b264e8ac8509472f5de19390ff351ce3"
+hash = "md5:21c669c268463de8abb0d4f2f91b7a8a"
 
 [[package]]
 name = "raster"
 git = "https://github.com/merelang/mere"
 subdir = "contrib/raster"
-rev = "557314f6fd8d87f16dfba136ad27175e8c7e2778"
+rev = "9d3966bd341eae2b0fd609e7ddcfb3136deb2e3f"
 hash = "md5:a0a5650eea6098d75f295810e2197632"
 
 [[package]]
 name = "unicode"
 git = "https://github.com/merelang/mere"
 subdir = "contrib/unicode"
-rev = "557314f6fd8d87f16dfba136ad27175e8c7e2778"
-hash = "md5:08722aabe549da0e58f92365ab9d31d8"
+rev = "9d3966bd341eae2b0fd609e7ddcfb3136deb2e3f"
+hash = "md5:bfca078c20c4cc8b799017dcc56563c9"
 
 [[package]]
 name = "window"
 git = "https://github.com/merelang/mere"
 subdir = "contrib/window"
-rev = "557314f6fd8d87f16dfba136ad27175e8c7e2778"
+rev = "9d3966bd341eae2b0fd609e7ddcfb3136deb2e3f"
 hash = "md5:460f22decfeaa367f32c1855de2eeafb"

@@ -3,4 +3,4 @@ name = "decks"
 version = "0.1.0"
 
 [dependencies]
-mslide = { git = "https://github.com/284km/mslide", rev = "ace99fc0727f1ddc0339e09750f79c3991e89e39" }
+mslide = { git = "https://github.com/284km/mslide", rev = "dd037d41a91e351b28b625b35ab91fb143bd1e71" }
