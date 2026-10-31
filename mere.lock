@@ -4,7 +4,7 @@
 name = "font"
 git = "https://github.com/merelang/mere"
 subdir = "contrib/font"
-rev = "9d3966bd341eae2b0fd609e7ddcfb3136deb2e3f"
+rev = "e457cd4ed2ae18276e95bd60579b34094bb157fa"
 hash = "md5:fe0e9cc9f559dbca39b9ccd7794ab450"
 
 [[package]]
@@ -22,8 +22,8 @@ hash = "md5:df5fa0e84d7d7446f0ab48bda07ad397"
 [[package]]
 name = "github.com/284km/mslide"
 git = "https://github.com/284km/mslide"
-rev = "99ff6bb08e9e4f5e99133add4186a574f717b7a5"
-hash = "md5:cdbba284c63fbb9e124e9e02fdf54da7"
+rev = "d18fd0d83cb420bab6bb1ea58068ebcf9ea44b07"
+hash = "md5:baf6adf491d515bfd8928ec3b797859e"
 
 [[package]]
 name = "mgz"
@@ -35,19 +35,19 @@ hash = "md5:21c669c268463de8abb0d4f2f91b7a8a"
 name = "raster"
 git = "https://github.com/merelang/mere"
 subdir = "contrib/raster"
-rev = "9d3966bd341eae2b0fd609e7ddcfb3136deb2e3f"
+rev = "e457cd4ed2ae18276e95bd60579b34094bb157fa"
 hash = "md5:a0a5650eea6098d75f295810e2197632"
 
 [[package]]
 name = "unicode"
 git = "https://github.com/merelang/mere"
 subdir = "contrib/unicode"
-rev = "9d3966bd341eae2b0fd609e7ddcfb3136deb2e3f"
+rev = "e457cd4ed2ae18276e95bd60579b34094bb157fa"
 hash = "md5:bfca078c20c4cc8b799017dcc56563c9"
 
 [[package]]
 name = "window"
 git = "https://github.com/merelang/mere"
 subdir = "contrib/window"
-rev = "9d3966bd341eae2b0fd609e7ddcfb3136deb2e3f"
+rev = "e457cd4ed2ae18276e95bd60579b34094bb157fa"
 hash = "md5:460f22decfeaa367f32c1855de2eeafb"
